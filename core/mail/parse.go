@@ -26,7 +26,11 @@ const (
 	MaxBodyBytes = 2 << 20
 	MaxMIMEDepth = 20
 
-	maxAttachmentBytes = 25 << 20 // matches core.MaxMessageBytes; core cannot be imported from here
+	// MaxAttachmentBytes caps a parsed attachment's bytes, keeping the part's
+	// leading slice beyond it: an importer sees Size == MaxAttachmentBytes and
+	// knows the data is partial. Matches core.MaxMessageBytes; core cannot be
+	// imported from here.
+	MaxAttachmentBytes = 25 << 20
 )
 
 type Parsed struct {
@@ -243,7 +247,7 @@ func (p *Parsed) walk(e *message.Entity, path string, depth int) {
 	if body, inline := classify(ct, disp, filename, cid); body {
 		p.addBody(ct == "text/html", e.Body, path)
 	} else {
-		data, err := io.ReadAll(io.LimitReader(e.Body, maxAttachmentBytes))
+		data, err := io.ReadAll(io.LimitReader(e.Body, MaxAttachmentBytes))
 		if err != nil {
 			p.warn("part %s: %v", path, err)
 		}

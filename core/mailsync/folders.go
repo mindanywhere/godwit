@@ -133,7 +133,9 @@ func syncFolders(ctx context.Context, db *store.DB, c *imapclient.Client, accoun
 			Args: []any{accountID, d.Mailbox, rs[i], delim(d)},
 		})
 	}
-	stale := "account_id = ? AND name NOT IN (" + marks(len(names)) + ")"
+	// local folders are Godwit's own (an import); no LIST can vouch for
+	// them, so only server-backed ones go stale.
+	stale := "account_id = ? AND local = 0 AND name NOT IN (" + marks(len(names)) + ")"
 	staleArgs := append([]any{accountID}, anys(names)...)
 	gone := "(SELECT id FROM folders WHERE " + stale + ")"
 	twice := append(append([]any{}, staleArgs...), staleArgs...)

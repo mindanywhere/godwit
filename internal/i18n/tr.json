@@ -835,6 +835,82 @@
   "settings_heading": "Ayarlar",
   "settings_keep_in_background": "Pencere kapandıktan sonra çalışmaya devam et",
   "settings_keep_in_background_help": "Eşitlemeye ve bildirim göndermeye devam eder; menü çubuğu simgesinden tekrar açabilirsiniz",
+  "settings_import": "İçe aktar",
+  "settings_import_sub": ".eml yedeklerini bu bilgisayardaki bir klasöre getir",
+  "settings_import_target": "Şuraya aktar",
+  "settings_import_account": "Hesap",
+  "settings_import_folder": "Klasör",
+  "settings_import_folder_help": "Yoksa oluşturulur; sunucu klasörünün taşıdığı ad kullanılamaz",
+  "settings_import_seen": "Okundu olarak işaretle",
+  "settings_import_source": "Yedek klasörü",
+  "settings_import_choose": "Klasör seç…",
+  "settings_import_scanning": "Klasör okunuyor…",
+  "settings_import_files": "{arg1, number, ::group-off} dosya, {arg2, number, ::group-off} zaten içe aktarılmış (atlanacak)",
+  "@settings_import_files": {
+    "placeholders": {
+      "arg1": {
+        "type": "int"
+      },
+      "arg2": {
+        "type": "int"
+      }
+    }
+  },
+  "settings_import_no_files": "Klasörde .eml dosyası yok",
+  "settings_import_start": "İçe aktarmayı başlat",
+  "settings_import_stop": "Durdur",
+  "settings_import_running": "İçe aktarılıyor · {arg1, number, ::group-off} / {arg2, number, ::group-off}",
+  "@settings_import_running": {
+    "placeholders": {
+      "arg1": {
+        "type": "int"
+      },
+      "arg2": {
+        "type": "int"
+      }
+    }
+  },
+  "settings_import_progress": "İçe aktarma ilerlemesi",
+  "settings_import_counts": "{arg1, number, ::group-off} eklendi · {arg2, number, ::group-off} yinelenen · {arg3, number, ::group-off} başarısız",
+  "@settings_import_counts": {
+    "placeholders": {
+      "arg1": {
+        "type": "int"
+      },
+      "arg2": {
+        "type": "int"
+      },
+      "arg3": {
+        "type": "int"
+      }
+    }
+  },
+  "settings_import_done": "İçe aktarma bitti: {arg1, number, ::group-off} eklendi, {arg2, number, ::group-off} yinelenen, {arg3, number, ::group-off} başarısız",
+  "@settings_import_done": {
+    "placeholders": {
+      "arg1": {
+        "type": "int"
+      },
+      "arg2": {
+        "type": "int"
+      },
+      "arg3": {
+        "type": "int"
+      }
+    }
+  },
+  "settings_import_stopped": "Durduruldu; sonraki çalıştırma buradan sürer",
+  "settings_import_failed": "Başarısız · {arg1, number, ::group-off}",
+  "@settings_import_failed": {
+    "placeholders": {
+      "arg1": {
+        "type": "int"
+      }
+    }
+  },
+  "settings_import_local": "Posta bu bilgisayarda kalır: hiç eşitlenmez, hiç gönderilmez",
+  "settings_import_busy": "Eşitleme sürüyor; sonra tekrar deneyin",
+  "settings_import_no_account": "Önce bir hesap ekleyin.",
   "settings_keychain": "Sistem anahtar zinciri",
   "settings_keychain_checking": "Kontrol ediliyor…",
   "settings_keychain_ok": "Sistem anahtar zinciri çalışıyor",

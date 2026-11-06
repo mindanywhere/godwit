@@ -57,6 +57,7 @@ func newHarnessDev(t *testing.T, dev bool, opts []coretest.Option, setup ...func
 	t.Helper()
 	h := &harness{t: t, env: coretest.New(t, opts...), plat: &fakePlatform{}, clock: newFakeClock()}
 	h.plat.svc = h.env.Svc
+	h.plat.dataDir = h.env.DataDir // the import journal, and 接入 AI 应用's path, live here
 	for _, s := range setup {
 		s(h.env)
 	}

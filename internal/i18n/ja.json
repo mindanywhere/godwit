@@ -835,6 +835,82 @@
   "settings_heading": "設定",
   "settings_keep_in_background": "ウィンドウを閉じてもバックグラウンドで実行を続ける",
   "settings_keep_in_background_help": "同期と通知の受信を継続し、メニューバーのアイコンから再度開けます",
+  "settings_import": "インポート",
+  "settings_import_sub": ".eml バックアップをこのコンピュータのフォルダに取り込む",
+  "settings_import_target": "取り込み先",
+  "settings_import_account": "アカウント",
+  "settings_import_folder": "フォルダ",
+  "settings_import_folder_help": "なければ作成されます。サーバーのフォルダと同じ名前は使えません",
+  "settings_import_seen": "既読にする",
+  "settings_import_source": "バックアップフォルダ",
+  "settings_import_choose": "フォルダを選択…",
+  "settings_import_scanning": "フォルダを読み込み中…",
+  "settings_import_files": "{arg1, number, ::group-off} 個のファイル、{arg2, number, ::group-off} 個はインポート済み（スキップ）",
+  "@settings_import_files": {
+    "placeholders": {
+      "arg1": {
+        "type": "int"
+      },
+      "arg2": {
+        "type": "int"
+      }
+    }
+  },
+  "settings_import_no_files": "フォルダに .eml ファイルがありません",
+  "settings_import_start": "インポートを開始",
+  "settings_import_stop": "停止",
+  "settings_import_running": "インポート中 · {arg1, number, ::group-off} / {arg2, number, ::group-off}",
+  "@settings_import_running": {
+    "placeholders": {
+      "arg1": {
+        "type": "int"
+      },
+      "arg2": {
+        "type": "int"
+      }
+    }
+  },
+  "settings_import_progress": "インポートの進行状況",
+  "settings_import_counts": "追加 {arg1, number, ::group-off} · 重複 {arg2, number, ::group-off} · 失敗 {arg3, number, ::group-off}",
+  "@settings_import_counts": {
+    "placeholders": {
+      "arg1": {
+        "type": "int"
+      },
+      "arg2": {
+        "type": "int"
+      },
+      "arg3": {
+        "type": "int"
+      }
+    }
+  },
+  "settings_import_done": "インポート完了：追加 {arg1, number, ::group-off}、重複 {arg2, number, ::group-off}、失敗 {arg3, number, ::group-off}",
+  "@settings_import_done": {
+    "placeholders": {
+      "arg1": {
+        "type": "int"
+      },
+      "arg2": {
+        "type": "int"
+      },
+      "arg3": {
+        "type": "int"
+      }
+    }
+  },
+  "settings_import_stopped": "停止しました。次回は続きから再開します",
+  "settings_import_failed": "失敗 · {arg1, number, ::group-off}",
+  "@settings_import_failed": {
+    "placeholders": {
+      "arg1": {
+        "type": "int"
+      }
+    }
+  },
+  "settings_import_local": "メールはこのコンピュータにのみ保存されます：同期も送信もされません",
+  "settings_import_busy": "同期中です。後でもう一度お試しください",
+  "settings_import_no_account": "先にアカウントを追加してください。",
   "settings_keychain": "システムキーチェーン",
   "settings_keychain_checking": "確認中…",
   "settings_keychain_ok": "システムキーチェーンは利用可能です",

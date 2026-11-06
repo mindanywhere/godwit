@@ -835,6 +835,82 @@
   "settings_heading": "Cài đặt",
   "settings_keep_in_background": "Tiếp tục chạy sau khi đóng cửa sổ",
   "settings_keep_in_background_help": "Tiếp tục đồng bộ và gửi thông báo; mở lại từ biểu tượng trên thanh menu",
+  "settings_import": "Nhập",
+  "settings_import_sub": "Đưa bản sao lưu .eml vào một thư mục trên máy này",
+  "settings_import_target": "Nhập vào",
+  "settings_import_account": "Tài khoản",
+  "settings_import_folder": "Thư mục",
+  "settings_import_folder_help": "Tạo khi chưa có; không dùng được tên mà thư mục máy chủ đã có",
+  "settings_import_seen": "Đánh dấu là đã đọc",
+  "settings_import_source": "Thư mục sao lưu",
+  "settings_import_choose": "Chọn thư mục…",
+  "settings_import_scanning": "Đang đọc thư mục…",
+  "settings_import_files": "{arg1, number, ::group-off} tệp, {arg2, number, ::group-off} đã nhập trước đó (bỏ qua)",
+  "@settings_import_files": {
+    "placeholders": {
+      "arg1": {
+        "type": "int"
+      },
+      "arg2": {
+        "type": "int"
+      }
+    }
+  },
+  "settings_import_no_files": "Không có tệp .eml trong thư mục",
+  "settings_import_start": "Bắt đầu nhập",
+  "settings_import_stop": "Dừng",
+  "settings_import_running": "Đang nhập · {arg1, number, ::group-off} / {arg2, number, ::group-off}",
+  "@settings_import_running": {
+    "placeholders": {
+      "arg1": {
+        "type": "int"
+      },
+      "arg2": {
+        "type": "int"
+      }
+    }
+  },
+  "settings_import_progress": "Tiến độ nhập",
+  "settings_import_counts": "Thêm {arg1, number, ::group-off} · trùng {arg2, number, ::group-off} · lỗi {arg3, number, ::group-off}",
+  "@settings_import_counts": {
+    "placeholders": {
+      "arg1": {
+        "type": "int"
+      },
+      "arg2": {
+        "type": "int"
+      },
+      "arg3": {
+        "type": "int"
+      }
+    }
+  },
+  "settings_import_done": "Nhập xong: thêm {arg1, number, ::group-off}, trùng {arg2, number, ::group-off}, lỗi {arg3, number, ::group-off}",
+  "@settings_import_done": {
+    "placeholders": {
+      "arg1": {
+        "type": "int"
+      },
+      "arg2": {
+        "type": "int"
+      },
+      "arg3": {
+        "type": "int"
+      }
+    }
+  },
+  "settings_import_stopped": "Đã dừng; lần sau sẽ tiếp tục từ chỗ này",
+  "settings_import_failed": "Lỗi · {arg1, number, ::group-off}",
+  "@settings_import_failed": {
+    "placeholders": {
+      "arg1": {
+        "type": "int"
+      }
+    }
+  },
+  "settings_import_local": "Thư chỉ nằm trên máy này: không đồng bộ, không gửi đi",
+  "settings_import_busy": "Đang đồng bộ; hãy thử lại sau",
+  "settings_import_no_account": "Hãy thêm tài khoản trước.",
   "settings_keychain": "Chuỗi khóa hệ thống",
   "settings_keychain_checking": "Đang kiểm tra…",
   "settings_keychain_ok": "Chuỗi khóa hệ thống hoạt động bình thường",

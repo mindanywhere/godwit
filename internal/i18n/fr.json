@@ -835,6 +835,82 @@
   "settings_heading": "Réglages",
   "settings_keep_in_background": "Continuer à fonctionner après la fermeture de la fenêtre",
   "settings_keep_in_background_help": "Continue de synchroniser et d’envoyer des notifications ; rouvrez l’application depuis l’icône de la barre des menus",
+  "settings_import": "Importer",
+  "settings_import_sub": "Importer des sauvegardes .eml dans un dossier de cet ordinateur",
+  "settings_import_target": "Importer dans",
+  "settings_import_account": "Compte",
+  "settings_import_folder": "Dossier",
+  "settings_import_folder_help": "Créé s'il manque ; un nom déjà porté par un dossier du serveur est refusé",
+  "settings_import_seen": "Marquer comme lu",
+  "settings_import_source": "Dossier de sauvegarde",
+  "settings_import_choose": "Choisir un dossier…",
+  "settings_import_scanning": "Lecture du dossier…",
+  "settings_import_files": "{arg1, number, ::group-off} fichiers, {arg2, number, ::group-off} déjà importés (ignorés)",
+  "@settings_import_files": {
+    "placeholders": {
+      "arg1": {
+        "type": "int"
+      },
+      "arg2": {
+        "type": "int"
+      }
+    }
+  },
+  "settings_import_no_files": "Aucun fichier .eml dans le dossier",
+  "settings_import_start": "Lancer l'import",
+  "settings_import_stop": "Arrêter",
+  "settings_import_running": "Importation · {arg1, number, ::group-off} sur {arg2, number, ::group-off}",
+  "@settings_import_running": {
+    "placeholders": {
+      "arg1": {
+        "type": "int"
+      },
+      "arg2": {
+        "type": "int"
+      }
+    }
+  },
+  "settings_import_progress": "Progression de l'import",
+  "settings_import_counts": "{arg1, number, ::group-off} ajoutés · {arg2, number, ::group-off} doublons · {arg3, number, ::group-off} échecs",
+  "@settings_import_counts": {
+    "placeholders": {
+      "arg1": {
+        "type": "int"
+      },
+      "arg2": {
+        "type": "int"
+      },
+      "arg3": {
+        "type": "int"
+      }
+    }
+  },
+  "settings_import_done": "Import terminé : {arg1, number, ::group-off} ajoutés, {arg2, number, ::group-off} doublons, {arg3, number, ::group-off} échecs",
+  "@settings_import_done": {
+    "placeholders": {
+      "arg1": {
+        "type": "int"
+      },
+      "arg2": {
+        "type": "int"
+      },
+      "arg3": {
+        "type": "int"
+      }
+    }
+  },
+  "settings_import_stopped": "Arrêté ; la prochaine exécution reprend là",
+  "settings_import_failed": "Échec · {arg1, number, ::group-off}",
+  "@settings_import_failed": {
+    "placeholders": {
+      "arg1": {
+        "type": "int"
+      }
+    }
+  },
+  "settings_import_local": "Les mails restent sur cet ordinateur : jamais synchronisés, jamais envoyés",
+  "settings_import_busy": "Une synchronisation est en cours ; réessayez ensuite",
+  "settings_import_no_account": "Ajoutez d'abord un compte.",
   "settings_keychain": "Trousseau système",
   "settings_keychain_checking": "Vérification…",
   "settings_keychain_ok": "Le trousseau système fonctionne",

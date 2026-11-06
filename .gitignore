@@ -21,3 +21,7 @@ web/dist/
 !.env.example
 !.env.sample
 .dev.vars
+/godwit.exe
+/build/
+*.log
+/tools

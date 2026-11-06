@@ -840,6 +840,82 @@
   "settings_heading": "Einstellungen",
   "settings_keep_in_background": "Im Hintergrund geöffnet bleiben",
   "settings_keep_in_background_help": "Synchronisiert und benachrichtigt weiter; über das Symbol in der Menüleiste wieder öffnen",
+  "settings_import": "Importieren",
+  "settings_import_sub": ".eml-Sicherungen in einen Ordner auf diesem Computer übernehmen",
+  "settings_import_target": "Importieren nach",
+  "settings_import_account": "Konto",
+  "settings_import_folder": "Ordner",
+  "settings_import_folder_help": "Wird bei Bedarf angelegt; ein Name, den ein Serverordner hat, ist nicht möglich",
+  "settings_import_seen": "Als gelesen markieren",
+  "settings_import_source": "Sicherungsordner",
+  "settings_import_choose": "Ordner wählen…",
+  "settings_import_scanning": "Ordner wird gelesen…",
+  "settings_import_files": "{arg1, number, ::group-off} Dateien, {arg2, number, ::group-off} bereits importiert (übersprungen)",
+  "@settings_import_files": {
+    "placeholders": {
+      "arg1": {
+        "type": "int"
+      },
+      "arg2": {
+        "type": "int"
+      }
+    }
+  },
+  "settings_import_no_files": "Keine .eml-Dateien im Ordner",
+  "settings_import_start": "Import starten",
+  "settings_import_stop": "Stoppen",
+  "settings_import_running": "Importiere · {arg1, number, ::group-off} von {arg2, number, ::group-off}",
+  "@settings_import_running": {
+    "placeholders": {
+      "arg1": {
+        "type": "int"
+      },
+      "arg2": {
+        "type": "int"
+      }
+    }
+  },
+  "settings_import_progress": "Importfortschritt",
+  "settings_import_counts": "{arg1, number, ::group-off} hinzugefügt · {arg2, number, ::group-off} Duplikate · {arg3, number, ::group-off} fehlgeschlagen",
+  "@settings_import_counts": {
+    "placeholders": {
+      "arg1": {
+        "type": "int"
+      },
+      "arg2": {
+        "type": "int"
+      },
+      "arg3": {
+        "type": "int"
+      }
+    }
+  },
+  "settings_import_done": "Import beendet: {arg1, number, ::group-off} hinzugefügt, {arg2, number, ::group-off} Duplikate, {arg3, number, ::group-off} fehlgeschlagen",
+  "@settings_import_done": {
+    "placeholders": {
+      "arg1": {
+        "type": "int"
+      },
+      "arg2": {
+        "type": "int"
+      },
+      "arg3": {
+        "type": "int"
+      }
+    }
+  },
+  "settings_import_stopped": "Gestoppt; der nächste Lauf macht dort weiter",
+  "settings_import_failed": "Fehlgeschlagen · {arg1, number, ::group-off}",
+  "@settings_import_failed": {
+    "placeholders": {
+      "arg1": {
+        "type": "int"
+      }
+    }
+  },
+  "settings_import_local": "Mails bleiben auf diesem Computer: nie synchronisiert, nie gesendet",
+  "settings_import_busy": "Eine Synchronisierung läuft; versuche es danach erneut",
+  "settings_import_no_account": "Füge zuerst ein Konto hinzu.",
   "settings_keychain": "System-Schlüsselbund",
   "settings_keychain_checking": "Wird geprüft…",
   "settings_keychain_ok": "Der System-Schlüsselbund funktioniert",

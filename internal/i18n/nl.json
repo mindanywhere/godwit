@@ -835,6 +835,82 @@
   "settings_heading": "Instellingen",
   "settings_keep_in_background": "Actief blijven nadat het venster is gesloten",
   "settings_keep_in_background_help": "Blijft synchroniseren en meldingen sturen; open opnieuw via het pictogram in de menubalk",
+  "settings_import": "Importeren",
+  "settings_import_sub": ".eml-back-ups naar een map op deze computer halen",
+  "settings_import_target": "Importeren in",
+  "settings_import_account": "Account",
+  "settings_import_folder": "Map",
+  "settings_import_folder_help": "Aangemaakt als die ontbreekt; een naam die een servermap heeft kan niet",
+  "settings_import_seen": "Als gelezen markeren",
+  "settings_import_source": "Back-upmap",
+  "settings_import_choose": "Map kiezen…",
+  "settings_import_scanning": "Map wordt gelezen…",
+  "settings_import_files": "{arg1, number, ::group-off} bestanden, {arg2, number, ::group-off} al geïmporteerd (overgeslagen)",
+  "@settings_import_files": {
+    "placeholders": {
+      "arg1": {
+        "type": "int"
+      },
+      "arg2": {
+        "type": "int"
+      }
+    }
+  },
+  "settings_import_no_files": "Geen .eml-bestanden in de map",
+  "settings_import_start": "Import starten",
+  "settings_import_stop": "Stoppen",
+  "settings_import_running": "Importeren · {arg1, number, ::group-off} van {arg2, number, ::group-off}",
+  "@settings_import_running": {
+    "placeholders": {
+      "arg1": {
+        "type": "int"
+      },
+      "arg2": {
+        "type": "int"
+      }
+    }
+  },
+  "settings_import_progress": "Voortgang van de import",
+  "settings_import_counts": "{arg1, number, ::group-off} toegevoegd · {arg2, number, ::group-off} duplicaten · {arg3, number, ::group-off} mislukt",
+  "@settings_import_counts": {
+    "placeholders": {
+      "arg1": {
+        "type": "int"
+      },
+      "arg2": {
+        "type": "int"
+      },
+      "arg3": {
+        "type": "int"
+      }
+    }
+  },
+  "settings_import_done": "Import klaar: {arg1, number, ::group-off} toegevoegd, {arg2, number, ::group-off} duplicaten, {arg3, number, ::group-off} mislukt",
+  "@settings_import_done": {
+    "placeholders": {
+      "arg1": {
+        "type": "int"
+      },
+      "arg2": {
+        "type": "int"
+      },
+      "arg3": {
+        "type": "int"
+      }
+    }
+  },
+  "settings_import_stopped": "Gestopt; de volgende keer gaat daar verder",
+  "settings_import_failed": "Mislukt · {arg1, number, ::group-off}",
+  "@settings_import_failed": {
+    "placeholders": {
+      "arg1": {
+        "type": "int"
+      }
+    }
+  },
+  "settings_import_local": "Mail blijft op deze computer: nooit gesynchroniseerd, nooit verzonden",
+  "settings_import_busy": "Er loopt een synchronisatie; probeer het daarna opnieuw",
+  "settings_import_no_account": "Voeg eerst een account toe.",
   "settings_keychain": "Systeemsleutelhanger",
   "settings_keychain_checking": "Controleren…",
   "settings_keychain_ok": "De systeemsleutelhanger werkt",

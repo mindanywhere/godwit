@@ -1023,12 +1023,13 @@ func (s *Service) runForward(ctx context.Context, r Rule, runID int64, i int, ms
 
 // ruleTarget loads the message an action works on; ok is false when it is gone.
 func (s *Service) ruleTarget(ctx context.Context, id int64) (acc int64, t target, ok bool, err error) {
-	rows, err := s.db.Query(ctx, "SELECT account_id, thread_id, folder_id, flags FROM messages WHERE id = ?", id)
+	rows, err := s.db.Query(ctx, "SELECT account_id, thread_id, folder_id, flags, server_folder_id IS NOT NULL FROM messages WHERE id = ?", id)
 	if err != nil || len(rows.Values) == 0 {
 		return 0, t, false, err
 	}
 	v := rows.Values[0]
-	return store.Int(v[0]), target{id: id, thread: store.Int(v[1]), folder: store.Int(v[2]), flags: store.Str(v[3])}, true, nil
+	return store.Int(v[0]), target{id: id, thread: store.Int(v[1]), folder: store.Int(v[2]), flags: store.Str(v[3]),
+		onServer: store.Int(v[4]) != 0}, true, nil
 }
 
 // actionWrites is an action's statements and the prior state they change.

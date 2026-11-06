@@ -592,6 +592,11 @@ var Migrations = [][]string{{
 	// only on a later event, so mail that came before, still in the
 	// consumer's backlog, is not forwarded (0: every event).
 	`ALTER TABLE rules ADD COLUMN since_seq INTEGER NOT NULL DEFAULT 0`,
+}, {
+	// A local folder holds mail that exists only in Godwit (an .eml import),
+	// with no folder of this name on the server: syncFolders neither syncs
+	// it nor deletes it as stale (mailsync/folders.go).
+	`ALTER TABLE folders ADD COLUMN local INTEGER NOT NULL DEFAULT 0`,
 }}
 
 // HistoryRowsVersion is the schema version that keeps a conversation's

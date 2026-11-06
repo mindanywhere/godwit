@@ -835,6 +835,82 @@
   "settings_heading": "Configurações",
   "settings_keep_in_background": "Continuar executando após fechar a janela",
   "settings_keep_in_background_help": "Continua sincronizando e enviando notificações; abra novamente pelo ícone na barra de menus",
+  "settings_import": "Importar",
+  "settings_import_sub": "Trazer cópias .eml para uma pasta deste computador",
+  "settings_import_target": "Importar para",
+  "settings_import_account": "Conta",
+  "settings_import_folder": "Pasta",
+  "settings_import_folder_help": "Criada se faltar; um nome que uma pasta do servidor tenha não pode ser usado",
+  "settings_import_seen": "Marcar como lida",
+  "settings_import_source": "Pasta de cópia",
+  "settings_import_choose": "Escolher pasta…",
+  "settings_import_scanning": "Lendo a pasta…",
+  "settings_import_files": "{arg1, number, ::group-off} arquivos, {arg2, number, ::group-off} já importados (ignorados)",
+  "@settings_import_files": {
+    "placeholders": {
+      "arg1": {
+        "type": "int"
+      },
+      "arg2": {
+        "type": "int"
+      }
+    }
+  },
+  "settings_import_no_files": "Nenhum arquivo .eml na pasta",
+  "settings_import_start": "Iniciar importação",
+  "settings_import_stop": "Parar",
+  "settings_import_running": "Importando · {arg1, number, ::group-off} de {arg2, number, ::group-off}",
+  "@settings_import_running": {
+    "placeholders": {
+      "arg1": {
+        "type": "int"
+      },
+      "arg2": {
+        "type": "int"
+      }
+    }
+  },
+  "settings_import_progress": "Progresso da importação",
+  "settings_import_counts": "{arg1, number, ::group-off} adicionados · {arg2, number, ::group-off} duplicados · {arg3, number, ::group-off} falharam",
+  "@settings_import_counts": {
+    "placeholders": {
+      "arg1": {
+        "type": "int"
+      },
+      "arg2": {
+        "type": "int"
+      },
+      "arg3": {
+        "type": "int"
+      }
+    }
+  },
+  "settings_import_done": "Importação concluída: {arg1, number, ::group-off} adicionados, {arg2, number, ::group-off} duplicados, {arg3, number, ::group-off} falharam",
+  "@settings_import_done": {
+    "placeholders": {
+      "arg1": {
+        "type": "int"
+      },
+      "arg2": {
+        "type": "int"
+      },
+      "arg3": {
+        "type": "int"
+      }
+    }
+  },
+  "settings_import_stopped": "Parado; a próxima execução continua daí",
+  "settings_import_failed": "Falharam · {arg1, number, ::group-off}",
+  "@settings_import_failed": {
+    "placeholders": {
+      "arg1": {
+        "type": "int"
+      }
+    }
+  },
+  "settings_import_local": "O e-mail fica neste computador: nunca é sincronizado nem enviado",
+  "settings_import_busy": "Uma sincronização está em curso; tente depois",
+  "settings_import_no_account": "Adicione uma conta primeiro.",
   "settings_keychain": "Chaves do sistema",
   "settings_keychain_checking": "Verificando…",
   "settings_keychain_ok": "As chaves do sistema estão funcionando",

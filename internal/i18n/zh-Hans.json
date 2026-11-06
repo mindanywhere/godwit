@@ -835,6 +835,82 @@
   "settings_heading": "设置",
   "settings_keep_in_background": "关闭窗口后保持在后台",
   "settings_keep_in_background_help": "继续同步和接收通知，可从菜单栏图标打开",
+  "settings_import": "导入",
+  "settings_import_sub": "把 .eml 备份导入本机文件夹",
+  "settings_import_target": "导入到",
+  "settings_import_account": "账户",
+  "settings_import_folder": "文件夹",
+  "settings_import_folder_help": "不存在时创建；与服务器文件夹同名时不能使用",
+  "settings_import_seen": "标记为已读",
+  "settings_import_source": "备份目录",
+  "settings_import_choose": "选择目录…",
+  "settings_import_scanning": "正在读取目录…",
+  "settings_import_files": "共 {arg1, number, ::group-off} 个文件，{arg2, number, ::group-off} 个已导入过（将跳过）",
+  "@settings_import_files": {
+    "placeholders": {
+      "arg1": {
+        "type": "int"
+      },
+      "arg2": {
+        "type": "int"
+      }
+    }
+  },
+  "settings_import_no_files": "目录里没有 .eml 文件",
+  "settings_import_start": "开始导入",
+  "settings_import_stop": "停止",
+  "settings_import_running": "导入中 · {arg1, number, ::group-off} / {arg2, number, ::group-off}",
+  "@settings_import_running": {
+    "placeholders": {
+      "arg1": {
+        "type": "int"
+      },
+      "arg2": {
+        "type": "int"
+      }
+    }
+  },
+  "settings_import_progress": "导入进度",
+  "settings_import_counts": "新增 {arg1, number, ::group-off} · 重复 {arg2, number, ::group-off} · 失败 {arg3, number, ::group-off}",
+  "@settings_import_counts": {
+    "placeholders": {
+      "arg1": {
+        "type": "int"
+      },
+      "arg2": {
+        "type": "int"
+      },
+      "arg3": {
+        "type": "int"
+      }
+    }
+  },
+  "settings_import_done": "导入完成：新增 {arg1, number, ::group-off}，重复 {arg2, number, ::group-off}，失败 {arg3, number, ::group-off}",
+  "@settings_import_done": {
+    "placeholders": {
+      "arg1": {
+        "type": "int"
+      },
+      "arg2": {
+        "type": "int"
+      },
+      "arg3": {
+        "type": "int"
+      }
+    }
+  },
+  "settings_import_stopped": "已停止；下次从断点继续",
+  "settings_import_failed": "失败 · {arg1, number, ::group-off}",
+  "@settings_import_failed": {
+    "placeholders": {
+      "arg1": {
+        "type": "int"
+      }
+    }
+  },
+  "settings_import_local": "邮件只保存在本机：不同步、不发送",
+  "settings_import_busy": "同步进行中，请稍后再试",
+  "settings_import_no_account": "先添加一个账户",
   "settings_keychain": "系统钥匙串",
   "settings_keychain_checking": "检查中…",
   "settings_keychain_ok": "系统钥匙串可用",

@@ -835,6 +835,82 @@
   "settings_heading": "Ajustes",
   "settings_keep_in_background": "Seguir ejecutándose al cerrar la ventana",
   "settings_keep_in_background_help": "Sigue sincronizando y enviando notificaciones; vuelve a abrirlo desde el icono de la barra de menús",
+  "settings_import": "Importar",
+  "settings_import_sub": "Traer copias .eml a una carpeta de este equipo",
+  "settings_import_target": "Importar en",
+  "settings_import_account": "Cuenta",
+  "settings_import_folder": "Carpeta",
+  "settings_import_folder_help": "Se crea si falta; un nombre que tenga una carpeta del servidor no se puede usar",
+  "settings_import_seen": "Marcar como leído",
+  "settings_import_source": "Carpeta de copia",
+  "settings_import_choose": "Elegir carpeta…",
+  "settings_import_scanning": "Leyendo la carpeta…",
+  "settings_import_files": "{arg1, number, ::group-off} archivos, {arg2, number, ::group-off} ya importados (se omiten)",
+  "@settings_import_files": {
+    "placeholders": {
+      "arg1": {
+        "type": "int"
+      },
+      "arg2": {
+        "type": "int"
+      }
+    }
+  },
+  "settings_import_no_files": "No hay archivos .eml en la carpeta",
+  "settings_import_start": "Iniciar importación",
+  "settings_import_stop": "Detener",
+  "settings_import_running": "Importando · {arg1, number, ::group-off} de {arg2, number, ::group-off}",
+  "@settings_import_running": {
+    "placeholders": {
+      "arg1": {
+        "type": "int"
+      },
+      "arg2": {
+        "type": "int"
+      }
+    }
+  },
+  "settings_import_progress": "Progreso de la importación",
+  "settings_import_counts": "{arg1, number, ::group-off} añadidos · {arg2, number, ::group-off} duplicados · {arg3, number, ::group-off} fallidos",
+  "@settings_import_counts": {
+    "placeholders": {
+      "arg1": {
+        "type": "int"
+      },
+      "arg2": {
+        "type": "int"
+      },
+      "arg3": {
+        "type": "int"
+      }
+    }
+  },
+  "settings_import_done": "Importación terminada: {arg1, number, ::group-off} añadidos, {arg2, number, ::group-off} duplicados, {arg3, number, ::group-off} fallidos",
+  "@settings_import_done": {
+    "placeholders": {
+      "arg1": {
+        "type": "int"
+      },
+      "arg2": {
+        "type": "int"
+      },
+      "arg3": {
+        "type": "int"
+      }
+    }
+  },
+  "settings_import_stopped": "Detenido; la próxima ejecución continúa desde ahí",
+  "settings_import_failed": "Fallidos · {arg1, number, ::group-off}",
+  "@settings_import_failed": {
+    "placeholders": {
+      "arg1": {
+        "type": "int"
+      }
+    }
+  },
+  "settings_import_local": "El correo se queda en este equipo: nunca se sincroniza ni se envía",
+  "settings_import_busy": "Hay una sincronización en curso; inténtalo después",
+  "settings_import_no_account": "Añade una cuenta primero.",
   "settings_keychain": "Llavero del sistema",
   "settings_keychain_checking": "Comprobando…",
   "settings_keychain_ok": "El llavero del sistema funciona",

@@ -835,6 +835,82 @@
   "settings_heading": "設定",
   "settings_keep_in_background": "關閉視窗後保持在背景執行",
   "settings_keep_in_background_help": "繼續同步和接收通知，可從選單列圖示開啟",
+  "settings_import": "匯入",
+  "settings_import_sub": "把 .eml 備份匯入本機資料夾",
+  "settings_import_target": "匯入到",
+  "settings_import_account": "帳戶",
+  "settings_import_folder": "資料夾",
+  "settings_import_folder_help": "不存在時建立；與伺服器資料夾同名時不能使用",
+  "settings_import_seen": "標記為已讀",
+  "settings_import_source": "備份目錄",
+  "settings_import_choose": "選擇目錄…",
+  "settings_import_scanning": "正在讀取目錄…",
+  "settings_import_files": "共 {arg1, number, ::group-off} 個檔案，{arg2, number, ::group-off} 個已匯入過（將略過）",
+  "@settings_import_files": {
+    "placeholders": {
+      "arg1": {
+        "type": "int"
+      },
+      "arg2": {
+        "type": "int"
+      }
+    }
+  },
+  "settings_import_no_files": "目錄裡沒有 .eml 檔案",
+  "settings_import_start": "開始匯入",
+  "settings_import_stop": "停止",
+  "settings_import_running": "匯入中 · {arg1, number, ::group-off} / {arg2, number, ::group-off}",
+  "@settings_import_running": {
+    "placeholders": {
+      "arg1": {
+        "type": "int"
+      },
+      "arg2": {
+        "type": "int"
+      }
+    }
+  },
+  "settings_import_progress": "匯入進度",
+  "settings_import_counts": "新增 {arg1, number, ::group-off} · 重複 {arg2, number, ::group-off} · 失敗 {arg3, number, ::group-off}",
+  "@settings_import_counts": {
+    "placeholders": {
+      "arg1": {
+        "type": "int"
+      },
+      "arg2": {
+        "type": "int"
+      },
+      "arg3": {
+        "type": "int"
+      }
+    }
+  },
+  "settings_import_done": "匯入完成：新增 {arg1, number, ::group-off}，重複 {arg2, number, ::group-off}，失敗 {arg3, number, ::group-off}",
+  "@settings_import_done": {
+    "placeholders": {
+      "arg1": {
+        "type": "int"
+      },
+      "arg2": {
+        "type": "int"
+      },
+      "arg3": {
+        "type": "int"
+      }
+    }
+  },
+  "settings_import_stopped": "已停止；下次從上次進度繼續",
+  "settings_import_failed": "失敗 · {arg1, number, ::group-off}",
+  "@settings_import_failed": {
+    "placeholders": {
+      "arg1": {
+        "type": "int"
+      }
+    }
+  },
+  "settings_import_local": "郵件只保存在本機：不同步、不傳送",
+  "settings_import_busy": "同步進行中，請稍後再試",
+  "settings_import_no_account": "先新增一個帳戶",
   "settings_keychain": "系統鑰匙圈",
   "settings_keychain_checking": "檢查中…",
   "settings_keychain_ok": "系統鑰匙圈可用",

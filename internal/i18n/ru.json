@@ -835,6 +835,82 @@
   "settings_heading": "Настройки",
   "settings_keep_in_background": "Продолжать работу после закрытия окна",
   "settings_keep_in_background_help": "Продолжает синхронизацию и показ уведомлений; открыть снова можно через значок в строке меню",
+  "settings_import": "Импорт",
+  "settings_import_sub": "Перенести резервные копии .eml в папку на этом компьютере",
+  "settings_import_target": "Импортировать в",
+  "settings_import_account": "Учётная запись",
+  "settings_import_folder": "Папка",
+  "settings_import_folder_help": "Создаётся при отсутствии; имя, занятое папкой сервера, не подойдёт",
+  "settings_import_seen": "Пометить как прочитанные",
+  "settings_import_source": "Папка резервных копий",
+  "settings_import_choose": "Выбрать папку…",
+  "settings_import_scanning": "Чтение папки…",
+  "settings_import_files": "Файлов: {arg1, number, ::group-off}, уже импортировано: {arg2, number, ::group-off} (пропускаются)",
+  "@settings_import_files": {
+    "placeholders": {
+      "arg1": {
+        "type": "int"
+      },
+      "arg2": {
+        "type": "int"
+      }
+    }
+  },
+  "settings_import_no_files": "В папке нет файлов .eml",
+  "settings_import_start": "Начать импорт",
+  "settings_import_stop": "Остановить",
+  "settings_import_running": "Импорт · {arg1, number, ::group-off} из {arg2, number, ::group-off}",
+  "@settings_import_running": {
+    "placeholders": {
+      "arg1": {
+        "type": "int"
+      },
+      "arg2": {
+        "type": "int"
+      }
+    }
+  },
+  "settings_import_progress": "Ход импорта",
+  "settings_import_counts": "Добавлено {arg1, number, ::group-off} · дубликатов {arg2, number, ::group-off} · ошибок {arg3, number, ::group-off}",
+  "@settings_import_counts": {
+    "placeholders": {
+      "arg1": {
+        "type": "int"
+      },
+      "arg2": {
+        "type": "int"
+      },
+      "arg3": {
+        "type": "int"
+      }
+    }
+  },
+  "settings_import_done": "Импорт завершён: добавлено {arg1, number, ::group-off}, дубликатов {arg2, number, ::group-off}, ошибок {arg3, number, ::group-off}",
+  "@settings_import_done": {
+    "placeholders": {
+      "arg1": {
+        "type": "int"
+      },
+      "arg2": {
+        "type": "int"
+      },
+      "arg3": {
+        "type": "int"
+      }
+    }
+  },
+  "settings_import_stopped": "Остановлено; следующий запуск продолжит отсюда",
+  "settings_import_failed": "Ошибки · {arg1, number, ::group-off}",
+  "@settings_import_failed": {
+    "placeholders": {
+      "arg1": {
+        "type": "int"
+      }
+    }
+  },
+  "settings_import_local": "Письма остаются на этом компьютере: не синхронизируются и не отправляются",
+  "settings_import_busy": "Идёт синхронизация; повторите позже",
+  "settings_import_no_account": "Сначала добавьте учётную запись.",
   "settings_keychain": "Системная связка ключей",
   "settings_keychain_checking": "Проверка…",
   "settings_keychain_ok": "Системная связка ключей работает исправно",

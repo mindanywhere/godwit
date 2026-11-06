@@ -1652,6 +1652,82 @@
   "settings_heading": "Settings",
   "settings_keep_in_background": "Keep running after the window closes",
   "settings_keep_in_background_help": "Keeps syncing and notifying; open it again from the menu bar icon",
+  "settings_import": "Import",
+  "settings_import_sub": "Bring .eml backups into a folder on this computer",
+  "settings_import_target": "Import into",
+  "settings_import_account": "Account",
+  "settings_import_folder": "Folder",
+  "settings_import_folder_help": "Created when missing; a name a server folder has cannot be used",
+  "settings_import_seen": "Mark as read",
+  "settings_import_source": "Backup folder",
+  "settings_import_choose": "Choose Folder…",
+  "settings_import_scanning": "Reading the folder…",
+  "settings_import_files": "{arg1, number, ::group-off} files, {arg2, number, ::group-off} already imported (skipped)",
+  "@settings_import_files": {
+    "placeholders": {
+      "arg1": {
+        "type": "int"
+      },
+      "arg2": {
+        "type": "int"
+      }
+    }
+  },
+  "settings_import_no_files": "No .eml files in the folder",
+  "settings_import_start": "Start Import",
+  "settings_import_stop": "Stop",
+  "settings_import_running": "Importing · {arg1, number, ::group-off} of {arg2, number, ::group-off}",
+  "@settings_import_running": {
+    "placeholders": {
+      "arg1": {
+        "type": "int"
+      },
+      "arg2": {
+        "type": "int"
+      }
+    }
+  },
+  "settings_import_progress": "Import progress",
+  "settings_import_counts": "{arg1, number, ::group-off} added · {arg2, number, ::group-off} duplicates · {arg3, number, ::group-off} failed",
+  "@settings_import_counts": {
+    "placeholders": {
+      "arg1": {
+        "type": "int"
+      },
+      "arg2": {
+        "type": "int"
+      },
+      "arg3": {
+        "type": "int"
+      }
+    }
+  },
+  "settings_import_done": "Import finished: {arg1, number, ::group-off} added, {arg2, number, ::group-off} duplicates, {arg3, number, ::group-off} failed",
+  "@settings_import_done": {
+    "placeholders": {
+      "arg1": {
+        "type": "int"
+      },
+      "arg2": {
+        "type": "int"
+      },
+      "arg3": {
+        "type": "int"
+      }
+    }
+  },
+  "settings_import_stopped": "Stopped; the next run resumes from there",
+  "settings_import_failed": "Failed · {arg1, number, ::group-off}",
+  "@settings_import_failed": {
+    "placeholders": {
+      "arg1": {
+        "type": "int"
+      }
+    }
+  },
+  "settings_import_local": "Mail stays on this computer: never synced, never sent",
+  "settings_import_busy": "A sync is running; try again after it",
+  "settings_import_no_account": "Add an account first.",
   "settings_keychain": "System keychain",
   "settings_keychain_checking": "Checking…",
   "settings_keychain_ok": "The system keychain works",

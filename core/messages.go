@@ -481,6 +481,7 @@ const latestOp = "(SELECT max(id) FROM ops WHERE message_id = ? AND state IN ('p
 type target struct {
 	id, thread, folder int64
 	flags              string
+	onServer           bool // has a server location; local (imported) mail does not
 }
 
 // targets loads the messages, which must all exist and belong to one account.
@@ -493,7 +494,7 @@ func (s *Service) targets(ctx context.Context, ids []int64) (int64, []target, er
 	for i, id := range ids {
 		args[i] = id
 	}
-	rows, err := s.db.Query(ctx, "SELECT id, account_id, thread_id, folder_id, flags FROM messages WHERE id IN ("+
+	rows, err := s.db.Query(ctx, "SELECT id, account_id, thread_id, folder_id, flags, server_folder_id IS NOT NULL FROM messages WHERE id IN ("+
 		strings.TrimSuffix(strings.Repeat("?,", len(ids)), ",")+")", args...)
 	if err != nil {
 		return 0, nil, err
@@ -507,7 +508,8 @@ func (s *Service) targets(ctx context.Context, ids []int64) (int64, []target, er
 		if store.Int(r[1]) != acc {
 			return 0, nil, errors.New("the messages belong to different accounts")
 		}
-		out = append(out, target{id: store.Int(r[0]), thread: store.Int(r[2]), folder: store.Int(r[3]), flags: store.Str(r[4])})
+		out = append(out, target{id: store.Int(r[0]), thread: store.Int(r[2]), folder: store.Int(r[3]), flags: store.Str(r[4]),
+			onServer: store.Int(r[5]) != 0})
 	}
 	return acc, out, nil
 }
@@ -628,9 +630,12 @@ func flagWrites(acc int64, ts []target, add, remove []string) ([]sqlite.Statemen
 		})
 		slices.Sort(set)
 		stmts = append(stmts,
-			sqlite.Statement{SQL: "UPDATE messages SET flags = ? WHERE id = ?", Args: []any{strings.Join(set, " "), m.id}},
-			sqlite.Statement{SQL: `INSERT INTO ops(account_id, message_id, kind, payload, depends_on, created_at)
-				VALUES (?, ?, 'flags', ?, ` + latestOp + `, unixepoch())`, Args: []any{acc, m.id, string(payload), m.id}})
+			sqlite.Statement{SQL: "UPDATE messages SET flags = ? WHERE id = ?", Args: []any{strings.Join(set, " "), m.id}})
+		if m.onServer { // local mail's flags are local: no server to push them to
+			stmts = append(stmts,
+				sqlite.Statement{SQL: `INSERT INTO ops(account_id, message_id, kind, payload, depends_on, created_at)
+					VALUES (?, ?, 'flags', ?, ` + latestOp + `, unixepoch())`, Args: []any{acc, m.id, string(payload), m.id}})
+		}
 	}
 	return stmts, nil
 }
@@ -640,12 +645,17 @@ func flagWrites(acc int64, ts []target, add, remove []string) ([]sqlite.Statemen
 func (s *Service) Move(ctx context.Context, ids []int64, folderID int64) error {
 	s.editMu.Lock()
 	defer s.editMu.Unlock()
-	rows, err := s.db.Query(ctx, "SELECT account_id FROM folders WHERE id = ?", folderID)
+	rows, err := s.db.Query(ctx, "SELECT account_id, local FROM folders WHERE id = ?", folderID)
 	if err != nil {
 		return err
 	}
 	if len(rows.Values) == 0 {
 		return fmt.Errorf("folder %d not found", folderID)
+	}
+	if store.Int(rows.Values[0][1]) != 0 {
+		// The move would orphan the server copy (sync would import it again
+		// as a duplicate), so a local folder takes no mail in.
+		return errors.New("cannot move mail into a local archive folder")
 	}
 	acc, ts, err := s.targets(ctx, ids)
 	if err != nil {
@@ -899,9 +909,12 @@ func moveWrites(accountID int64, ts []target, folderID int64) ([]target, []sqlit
 		stmts = append(stmts,
 			sqlite.Statement{SQL: "UPDATE messages SET folder_id = ?, entered_at = unixepoch() WHERE id = ?", Args: []any{folderID, m.id}},
 			// A rescue beats a purge queued before it (the move would otherwise wait for it).
-			sqlite.Statement{SQL: "UPDATE ops SET state = 'cancelled' WHERE message_id = ? AND kind = 'purge' AND state = 'pending'", Args: []any{m.id}},
-			sqlite.Statement{SQL: `INSERT INTO ops(account_id, message_id, kind, dst_folder_id, depends_on, created_at)
-				VALUES (?, ?, 'move', ?, ` + latestOp + `, unixepoch())`, Args: []any{accountID, m.id, folderID, m.id}})
+			sqlite.Statement{SQL: "UPDATE ops SET state = 'cancelled' WHERE message_id = ? AND kind = 'purge' AND state = 'pending'", Args: []any{m.id}})
+		if m.onServer { // local mail moves locally: no server copy to move
+			stmts = append(stmts,
+				sqlite.Statement{SQL: `INSERT INTO ops(account_id, message_id, kind, dst_folder_id, depends_on, created_at)
+					VALUES (?, ?, 'move', ?, ` + latestOp + `, unixepoch())`, Args: []any{accountID, m.id, folderID, m.id}})
+		}
 	}
 	return moved, stmts
 }

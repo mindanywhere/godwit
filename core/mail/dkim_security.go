@@ -35,7 +35,7 @@ func VerifyMessageDKIM(ctx context.Context, from string, raw []byte, lookup func
 	if err := ctx.Err(); err != nil {
 		return rep, err
 	}
-	if len(raw) == 0 || len(raw) > maxAttachmentBytes {
+	if len(raw) == 0 || len(raw) > MaxAttachmentBytes {
 		return rep, nil
 	}
 	m, err := netmail.ReadMessage(bytes.NewReader(raw))

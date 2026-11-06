@@ -22,7 +22,10 @@ import (
 )
 
 const (
-	MaxCacheBytes   = 2 << 30  // attachment cache budget; oldest files are evicted beyond it
+	// MaxCacheBytes is the attachment cache budget; oldest files are evicted
+	// beyond it. Imported mail's attachments live only here (no server copy
+	// to download again), so the budget leaves room for a full import.
+	MaxCacheBytes   = 4 << 30
 	MaxMessageBytes = 25 << 20 // largest attachment or message accepted
 )
 

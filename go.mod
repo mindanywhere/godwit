@@ -59,6 +59,4 @@ ignore ./web/node_modules
 
 tool github.com/egoist/mygo/cmd/mygo
 
-// TODO: push the local fork to github.com/godwit-email/go-imap (tag
-// v2.0.0-beta.8.godwit.7) and replace this with the remote module.
-replace github.com/emersion/go-imap/v2 => ../go-imap
+replace github.com/emersion/go-imap/v2 => github.com/mindanywhere/go-imap/v2 v2.0.0-beta.8.godwit.7

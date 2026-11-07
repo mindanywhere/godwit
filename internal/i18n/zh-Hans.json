@@ -556,6 +556,21 @@
   "settings_account_login_oauth_expired": "浏览器登录（OAuth）· 令牌已过期",
   "settings_account_login_secret": "{arg1} · 保存在系统钥匙串",
   "settings_account_login_update": "更新{arg1}",
+  "settings_account_counts": "同步情况",
+  "settings_account_counts_help": "每个文件夹本机已有与服务器上的邮件数；服务器数量在下次同步后更新。",
+  "settings_account_counts_row": "本机 {arg1} 封 · 服务器 {arg2} 封",
+  "@settings_account_counts_row": {
+    "placeholders": {
+      "arg1": { "type": "String" },
+      "arg2": { "type": "String" }
+    }
+  },
+  "settings_account_counts_unknown": "本机 {arg1} 封",
+  "@settings_account_counts_unknown": {
+    "placeholders": {
+      "arg1": { "type": "String" }
+    }
+  },
   "settings_account_mailbox": "邮箱行为",
   "settings_account_mailbox_archive_help": "按「归档」时邮件移到这里",
   "settings_account_mailbox_drafts_help": "写到一半的邮件存在这里",
@@ -1455,6 +1470,19 @@
   "settings_dot_retrying": "正在重试",
   "shell_sync_account": "{arg1} · {arg2}",
   "shell_sync_title": "同步状态",
+  "shell_sync_counts": "本机 {arg1} 封 · 服务器 {arg2} 封",
+  "@shell_sync_counts": {
+    "placeholders": {
+      "arg1": { "type": "String" },
+      "arg2": { "type": "String" }
+    }
+  },
+  "shell_sync_counts_unknown": "本机 {arg1} 封",
+  "@shell_sync_counts_unknown": {
+    "placeholders": {
+      "arg1": { "type": "String" }
+    }
+  },
   "shell_sync_all": "全部立即同步",
   "shell_sync_retry": "立即重试",
   "shell_sync_servers": "检查服务器设置",

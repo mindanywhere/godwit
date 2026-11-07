@@ -272,6 +272,8 @@ type App struct {
 	syncedAtBy map[int64]time.Time // each account's last successful sync since launch
 	ticking    bool                // a minute tick redraws the sync age
 
+	folderCounts map[int64]folderCount // each account's 本机/服务器 mail count, for the sync menu
+
 	addAccount *onboarding // the add-account sheet; nil when closed
 	mail       *mailPage   // the Mail section
 	palette    palette     // the ⌘K search panel
@@ -338,6 +340,7 @@ func New(d Deps) *App {
 	a.pages[PageKit] = &kitPage{}
 	a.dev = d.Dev
 	a.syncing, a.syncErr, a.syncedAtBy = map[int64]bool{}, map[int64]syncFail{}, map[int64]time.Time{}
+	a.folderCounts = map[int64]folderCount{}
 	a.undoToasts = map[int64]bool{}
 	a.ctx, a.cancel = context.WithCancel(context.Background())
 	a.pumpDone = make(chan struct{})

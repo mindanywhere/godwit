@@ -556,6 +556,20 @@
   "settings_account_login_oauth_expired": "Tarayıcıyla oturum açma (OAuth) · belirtecin süresi doldu",
   "settings_account_login_secret": "{arg1} · sistem anahtar zincirinde tutulur",
   "settings_account_login_update": "{arg1} bilgisini güncelle",
+  "settings_account_counts": "Senkronizasyon durumu",
+  "settings_account_counts_help": "Klasör başına bu cihazda ve sunucudaki e-posta sayısı; sunucu sayıları bir sonraki eşitlemede güncellenir.",
+  "settings_account_counts_row": "Bu cihazda {arg1} · sunucuda {arg2}",
+  "@settings_account_counts_row": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      },
+      "arg2": {
+        "type": "String"
+      }
+    }
+  },
+  "settings_account_counts_unknown": "Bu cihazda {arg1}",
   "settings_account_mailbox": "Posta kutusu davranışı",
   "settings_account_mailbox_archive_help": "Arşivle’ye bastığınızda e-postalar buraya taşınır",
   "settings_account_mailbox_drafts_help": "Henüz tamamlamadığınız e-postalar burada tutulur",
@@ -1426,6 +1440,18 @@
   "settings_dot_retrying": "Yeniden deneniyor",
   "shell_sync_account": "{arg1} · {arg2}",
   "shell_sync_title": "Eşitleme durumu",
+  "shell_sync_counts": "Bu cihazda {arg1} · sunucuda {arg2}",
+  "@shell_sync_counts": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      },
+      "arg2": {
+        "type": "String"
+      }
+    }
+  },
+  "shell_sync_counts_unknown": "Bu cihazda {arg1}",
   "shell_sync_all": "Tümünü şimdi eşitle",
   "shell_sync_retry": "Şimdi tekrar dene",
   "shell_sync_servers": "Sunucu ayarlarını kontrol et",

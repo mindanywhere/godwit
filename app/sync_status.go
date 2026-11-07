@@ -169,7 +169,12 @@ func (a *App) syncStatus(c *ui.Context) {
 	}
 	chip := kit.ButtonFrame(c, kit.ButtonOpts{Variant: kit.Ghost, Size: kit.SizeSm}).FontSize(t.Text.Sm).TextColor(color).
 		Gap(th.Space(1.5)).Expanded(a.syncOpen).Label(text)
-	chip.OnClick(func() { a.syncOpen = !a.syncOpen })
+	chip.OnClick(func() {
+		a.syncOpen = !a.syncOpen
+		if a.syncOpen {
+			a.refreshFolderCounts()
+		}
+	})
 	chip.Children(func() {
 		if s, ok := syncDot(dotLevel); ok {
 			kit.StatusDot(c, s)
@@ -178,6 +183,36 @@ func (a *App) syncStatus(c *ui.Context) {
 		ui.Icon(c, icons.Get("chevron-down")).Size(theme.IconXs, theme.IconXs)
 	})
 	kit.PopoverAt(c, chip, &a.syncOpen, ui.AnchorBottomEnd, ui.AnchorTopEnd, theme.PopupOffset, func() { a.syncMenu(c, hs) })
+}
+
+// folderCount is an account's mail: how much is on this device, and how much
+// the server holds where its last sync's SELECT reported it.
+type folderCount struct {
+	local, server int
+	known         bool // the server total is known
+}
+
+// refreshFolderCounts reads every account's folders in the background into
+// a.folderCounts, for the sync menu's 本机 N / 服务器 M line.
+func (a *App) refreshFolderCounts() {
+	a.query(func(ctx context.Context) error {
+		for _, acc := range a.accounts {
+			fs, err := a.svc.ListFolders(ctx, acc.ID)
+			if err != nil {
+				return err
+			}
+			fc := folderCount{}
+			for _, f := range fs {
+				fc.local += f.Total
+				if f.ServerTotal != nil {
+					fc.server += *f.ServerTotal
+					fc.known = true
+				}
+			}
+			a.folderCounts[acc.ID] = fc
+		}
+		return nil
+	}, func(error) {})
 }
 
 // syncMenu lists each account: its state, why, and what to do about it.
@@ -247,6 +282,13 @@ func (a *App) syncAccounts(c *ui.Context, hs []syncHealth, indent float32, act f
 						kit.Button(c.Key(b.label), b.label, o).FontSize(xs).OnClick(act(b.do))
 					}
 				})
+			}
+			if fc, ok := a.folderCounts[h.acc.ID]; ok && (fc.local > 0 || fc.known) {
+				text := i18n.Tf("shell.sync.counts", fc.local, fc.server)
+				if !fc.known {
+					text = i18n.Tf("shell.sync.counts.unknown", fc.local)
+				}
+				kit.Text(c, text, xs).TextColor(t.Muted).Padding(0, 0, 0, indent).SingleLine()
 			}
 		})
 	}

@@ -1040,6 +1040,33 @@ func (p *settingsPage) mailboxSection(c *ui.Context, id int64) {
 	}
 	settingsSection(c, i18n.T("settings.account.mailbox"), i18n.T("settings.account.mailbox.help"),
 		role(0), role(1), role(2), purge(0), role(3), purge(1), role(4))
+	p.folderCountsSection(c, id, b)
+}
+
+// folderCountsSection is 同步情况: each folder's mail on this device and on
+// the server, as the last sync's SELECT reported it.
+func (p *settingsPage) folderCountsSection(c *ui.Context, id int64, b *mailbox) {
+	if len(b.folders) == 0 {
+		return
+	}
+	rows := make([]func(), 0, len(b.folders))
+	for _, f := range b.folders {
+		f := f
+		name := f.Name
+		if f.Role != "" {
+			name = i18n.T("mail.folder." + f.Role)
+		}
+		text := i18n.Tf("settings.account.counts.unknown", f.Total)
+		if f.ServerTotal != nil {
+			text = i18n.Tf("settings.account.counts.row", f.Total, *f.ServerTotal)
+		}
+		rows = append(rows, func() {
+			settingRow(c, name, "", func() {
+				kit.Text(c, text, theme.Of(c).Text.Sm).TextColor(theme.Of(c).Muted).SingleLine()
+			})
+		})
+	}
+	settingsSection(c, i18n.T("settings.account.counts"), i18n.T("settings.account.counts.help"), rows...)
 }
 
 // moveAccount puts the account at i before the one at to (len for the end),

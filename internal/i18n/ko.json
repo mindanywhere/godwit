@@ -556,6 +556,20 @@
   "settings_account_login_oauth_expired": "브라우저 로그인(OAuth) · 토큰 만료됨",
   "settings_account_login_secret": "{arg1} · 시스템 키체인에 보관됨",
   "settings_account_login_update": "{arg1} 업데이트",
+  "settings_account_counts": "동기화 상태",
+  "settings_account_counts_help": "폴더별로 이 기기와 서버에 있는 메일 수입니다. 서버 쪽 수치는 다음 동기화 때 갱신됩니다.",
+  "settings_account_counts_row": "이 기기 {arg1}통 · 서버 {arg2}통",
+  "@settings_account_counts_row": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      },
+      "arg2": {
+        "type": "String"
+      }
+    }
+  },
+  "settings_account_counts_unknown": "이 기기 {arg1}통",
   "settings_account_mailbox": "메일함 동작",
   "settings_account_mailbox_archive_help": "‘보관’을 누르면 메일이 여기로 이동합니다",
   "settings_account_mailbox_drafts_help": "작성 중인 메일이 여기에 보관됩니다",
@@ -1426,6 +1440,18 @@
   "settings_dot_retrying": "재시도 중",
   "shell_sync_account": "{arg1} · {arg2}",
   "shell_sync_title": "동기화 상태",
+  "shell_sync_counts": "이 기기 {arg1}통 · 서버 {arg2}통",
+  "@shell_sync_counts": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      },
+      "arg2": {
+        "type": "String"
+      }
+    }
+  },
+  "shell_sync_counts_unknown": "이 기기 {arg1}통",
   "shell_sync_all": "지금 모두 동기화",
   "shell_sync_retry": "지금 다시 시도",
   "shell_sync_servers": "서버 설정 확인",

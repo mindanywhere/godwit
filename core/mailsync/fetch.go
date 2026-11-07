@@ -149,6 +149,11 @@ func syncFolder(ctx context.Context, db *store.DB, c *imapclient.Client, a *acco
 			return err
 		}
 	}
+	// The folder's count on the server, for the UI's 本机 N / 服务器 M.
+	if _, err := db.Transaction(ctx, []sqlite.Statement{{SQL: "UPDATE folders SET server_total = ? WHERE id = ?",
+		Args: []any{int(sel.NumMessages), f.id}}}); err != nil {
+		return err
+	}
 	if err := fetchNew(ctx, db, c, a, f, sel.NumMessages, r); err != nil {
 		return err
 	}

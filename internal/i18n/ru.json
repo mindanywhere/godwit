@@ -556,6 +556,20 @@
   "settings_account_login_oauth_expired": "Вход через браузер (OAuth) · срок действия токена истёк",
   "settings_account_login_secret": "{arg1} · хранится в системной связке ключей",
   "settings_account_login_update": "Обновить: {arg1}",
+  "settings_account_counts": "Состояние синхронизации",
+  "settings_account_counts_help": "Писем на этом устройстве и на сервере по каждой папке; счётчики сервера обновляются при следующей синхронизации.",
+  "settings_account_counts_row": "здесь: {arg1} · на сервере: {arg2}",
+  "@settings_account_counts_row": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      },
+      "arg2": {
+        "type": "String"
+      }
+    }
+  },
+  "settings_account_counts_unknown": "здесь: {arg1}",
   "settings_account_mailbox": "Поведение папок",
   "settings_account_mailbox_archive_help": "Сюда перемещаются письма при нажатии «Архивировать»",
   "settings_account_mailbox_drafts_help": "Здесь хранятся недописанные письма",
@@ -1426,6 +1440,18 @@
   "settings_dot_retrying": "Повторная попытка",
   "shell_sync_account": "{arg1} · {arg2}",
   "shell_sync_title": "Статус синхронизации",
+  "shell_sync_counts": "здесь: {arg1} · на сервере: {arg2}",
+  "@shell_sync_counts": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      },
+      "arg2": {
+        "type": "String"
+      }
+    }
+  },
+  "shell_sync_counts_unknown": "здесь: {arg1}",
   "shell_sync_all": "Синхронизировать все сейчас",
   "shell_sync_retry": "Повторить сейчас",
   "shell_sync_servers": "Проверить настройки сервера",

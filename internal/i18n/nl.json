@@ -556,6 +556,20 @@
   "settings_account_login_oauth_expired": "Inloggen via browser (OAuth) · token verlopen",
   "settings_account_login_secret": "{arg1} · bewaard in de systeemsleutelhanger",
   "settings_account_login_update": "{arg1} bijwerken",
+  "settings_account_counts": "Synchronisatiestatus",
+  "settings_account_counts_help": "E-mail op dit apparaat en op de server, per map; de servertotalen worden bij de volgende synchronisatie bijgewerkt.",
+  "settings_account_counts_row": "{arg1} hier · {arg2} op de server",
+  "@settings_account_counts_row": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      },
+      "arg2": {
+        "type": "String"
+      }
+    }
+  },
+  "settings_account_counts_unknown": "{arg1} hier",
   "settings_account_mailbox": "Mapgedrag",
   "settings_account_mailbox_archive_help": "E-mail wordt hierheen verplaatst wanneer je op Archiveren drukt",
   "settings_account_mailbox_drafts_help": "E-mail die je nog niet hebt afgemaakt, wordt hier bewaard",
@@ -1426,6 +1440,18 @@
   "settings_dot_retrying": "Opnieuw proberen",
   "shell_sync_account": "{arg1} · {arg2}",
   "shell_sync_title": "Synchronisatiestatus",
+  "shell_sync_counts": "{arg1} hier · {arg2} op de server",
+  "@shell_sync_counts": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      },
+      "arg2": {
+        "type": "String"
+      }
+    }
+  },
+  "shell_sync_counts_unknown": "{arg1} hier",
   "shell_sync_all": "Alles nu synchroniseren",
   "shell_sync_retry": "Nu opnieuw proberen",
   "shell_sync_servers": "Serverinstellingen controleren",

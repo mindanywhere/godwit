@@ -597,6 +597,10 @@ var Migrations = [][]string{{
 	// with no folder of this name on the server: syncFolders neither syncs
 	// it nor deletes it as stale (mailsync/folders.go).
 	`ALTER TABLE folders ADD COLUMN local INTEGER NOT NULL DEFAULT 0`,
+}, {
+	// The folder's message count on the server, from the last sync's SELECT:
+	// what the UI reports beside the local count. NULL: not known yet.
+	`ALTER TABLE folders ADD COLUMN server_total INTEGER`,
 }}
 
 // HistoryRowsVersion is the schema version that keeps a conversation's

@@ -561,6 +561,20 @@
   "settings_account_login_oauth_expired": "Browser-Anmeldung (OAuth) · Token abgelaufen",
   "settings_account_login_secret": "{arg1} · im System-Schlüsselbund gespeichert",
   "settings_account_login_update": "{arg1} aktualisieren",
+  "settings_account_counts": "Synchronisierungsstatus",
+  "settings_account_counts_help": "E-Mails auf diesem Gerät und auf dem Server, je Ordner; die Serverzahlen aktualisieren sich bei der nächsten Synchronisierung.",
+  "settings_account_counts_row": "{arg1} hier · {arg2} auf dem Server",
+  "@settings_account_counts_row": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      },
+      "arg2": {
+        "type": "String"
+      }
+    }
+  },
+  "settings_account_counts_unknown": "{arg1} hier",
   "settings_account_mailbox": "Postfach-Verhalten",
   "settings_account_mailbox_archive_help": "E-Mails werden hierhin verschoben, wenn du auf Archivieren klickst",
   "settings_account_mailbox_drafts_help": "Noch nicht fertiggestellte E-Mails werden hier aufbewahrt",
@@ -1433,6 +1447,18 @@
   "settings_dot_retrying": "Wird wiederholt",
   "shell_sync_account": "{arg1} · {arg2}",
   "shell_sync_title": "Synchronisation",
+  "shell_sync_counts": "{arg1} hier · {arg2} auf dem Server",
+  "@shell_sync_counts": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      },
+      "arg2": {
+        "type": "String"
+      }
+    }
+  },
+  "shell_sync_counts_unknown": "{arg1} hier",
   "shell_sync_all": "Alle synchronisieren",
   "shell_sync_retry": "Jetzt wiederholen",
   "shell_sync_servers": "Servereinstellungen prüfen",

@@ -556,6 +556,20 @@
   "settings_account_login_oauth_expired": "Inicio de sesión en el navegador (OAuth) · token caducado",
   "settings_account_login_secret": "{arg1} · guardado en el llavero del sistema",
   "settings_account_login_update": "Actualizar {arg1}",
+  "settings_account_counts": "Estado de sincronización",
+  "settings_account_counts_help": "Correo en este dispositivo y en el servidor, por carpeta; los totales del servidor se actualizan en la próxima sincronización.",
+  "settings_account_counts_row": "{arg1} aquí · {arg2} en el servidor",
+  "@settings_account_counts_row": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      },
+      "arg2": {
+        "type": "String"
+      }
+    }
+  },
+  "settings_account_counts_unknown": "{arg1} aquí",
   "settings_account_mailbox": "Comportamiento del buzón",
   "settings_account_mailbox_archive_help": "Los correos se mueven aquí al pulsar Archivar",
   "settings_account_mailbox_drafts_help": "Los correos sin terminar se guardan aquí",
@@ -1426,6 +1440,18 @@
   "settings_dot_retrying": "Reintentando",
   "shell_sync_account": "{arg1} · {arg2}",
   "shell_sync_title": "Estado de la sincronización",
+  "shell_sync_counts": "{arg1} aquí · {arg2} en el servidor",
+  "@shell_sync_counts": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      },
+      "arg2": {
+        "type": "String"
+      }
+    }
+  },
+  "shell_sync_counts_unknown": "{arg1} aquí",
   "shell_sync_all": "Sincronizar todo ahora",
   "shell_sync_retry": "Reintentar ahora",
   "shell_sync_servers": "Revisar ajustes del servidor",

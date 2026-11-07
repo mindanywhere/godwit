@@ -1162,6 +1162,21 @@
       }
     }
   },
+  "settings_account_counts": "Sync status",
+  "settings_account_counts_help": "Mail on this device and on the server, per folder; the server counts update at the next sync.",
+  "settings_account_counts_row": "{arg1} here · {arg2} on the server",
+  "@settings_account_counts_row": {
+    "placeholders": {
+      "arg1": { "type": "String" },
+      "arg2": { "type": "String" }
+    }
+  },
+  "settings_account_counts_unknown": "{arg1} here",
+  "@settings_account_counts_unknown": {
+    "placeholders": {
+      "arg1": { "type": "String" }
+    }
+  },
   "settings_account_mailbox": "Mailbox behaviour",
   "settings_account_mailbox_archive_help": "Mail moves here when you press Archive",
   "settings_account_mailbox_drafts_help": "Mail you have not finished is kept here",
@@ -2706,6 +2721,19 @@
   },
   "shell_sync_title": "Sync status",
   "shell_sync_all": "Sync all now",
+  "shell_sync_counts": "{arg1} on this device · {arg2} on the server",
+  "@shell_sync_counts": {
+    "placeholders": {
+      "arg1": { "type": "String" },
+      "arg2": { "type": "String" }
+    }
+  },
+  "shell_sync_counts_unknown": "{arg1} on this device",
+  "@shell_sync_counts_unknown": {
+    "placeholders": {
+      "arg1": { "type": "String" }
+    }
+  },
   "shell_sync_retry": "Retry now",
   "shell_sync_servers": "Check server settings",
   "shell_sync_reauth_reason": "The sign-in expired, so this account stopped syncing and new mail is not arriving. Sign in again and it catches up.",

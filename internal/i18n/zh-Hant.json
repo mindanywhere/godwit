@@ -556,6 +556,21 @@
   "settings_account_login_oauth_expired": "瀏覽器登入（OAuth）· 權杖已過期",
   "settings_account_login_secret": "{arg1} · 儲存在系統鑰匙圈",
   "settings_account_login_update": "更新{arg1}",
+  "settings_account_counts": "同步情況",
+  "settings_account_counts_help": "每個資料夾本機已有與伺服器上的郵件數；伺服器數量在下一次同步後更新。",
+  "settings_account_counts_row": "本機 {arg1} 封 · 伺服器 {arg2} 封",
+  "@settings_account_counts_row": {
+    "placeholders": {
+      "arg1": { "type": "String" },
+      "arg2": { "type": "String" }
+    }
+  },
+  "settings_account_counts_unknown": "本機 {arg1} 封",
+  "@settings_account_counts_unknown": {
+    "placeholders": {
+      "arg1": { "type": "String" }
+    }
+  },
   "settings_account_mailbox": "信箱行為",
   "settings_account_mailbox_archive_help": "按「封存」時郵件移到這裡",
   "settings_account_mailbox_drafts_help": "寫到一半的郵件存在這裡",
@@ -1426,6 +1441,19 @@
   "settings_dot_retrying": "正在重試",
   "shell_sync_account": "{arg1} · {arg2}",
   "shell_sync_title": "同步狀態",
+  "shell_sync_counts": "本機 {arg1} 封 · 伺服器 {arg2} 封",
+  "@shell_sync_counts": {
+    "placeholders": {
+      "arg1": { "type": "String" },
+      "arg2": { "type": "String" }
+    }
+  },
+  "shell_sync_counts_unknown": "本機 {arg1} 封",
+  "@shell_sync_counts_unknown": {
+    "placeholders": {
+      "arg1": { "type": "String" }
+    }
+  },
   "shell_sync_all": "全部立即同步",
   "shell_sync_retry": "立即重試",
   "shell_sync_servers": "檢查伺服器設定",

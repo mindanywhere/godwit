@@ -1,6 +1,10 @@
 package core
 
-import "github.com/godwit-email/godwit/core/conn"
+import (
+	"io"
+
+	"github.com/godwit-email/godwit/core/conn"
+)
 
 // Security is the transport protection of an IMAP or SMTP connection.
 type Security = conn.Security
@@ -10,6 +14,11 @@ const (
 	SecurityStartTLS = conn.StartTLS
 	SecurityNone     = conn.None
 )
+
+// SetRawTraceWriter points IMAP protocol traces, redacted only of
+// credentials, at w for reading on the machine: the app sets it to the
+// local log file. A nil writer unsets.
+func SetRawTraceWriter(w io.Writer) { conn.SetRawTraceWriter(w) }
 
 // AccountInput is what the user supplies to add or test an account.
 type AccountInput struct {
@@ -57,13 +66,15 @@ type Account struct {
 }
 
 // Folder is a mailbox of an account. Role is inbox, sent, trash, drafts, junk,
-// archive or empty.
+// archive or empty. ServerTotal is the folder's message count on the server as
+// the last sync's SELECT reported; nil not known yet.
 type Folder struct {
 	ID, AccountID int64
 	Name, Role    string
 	Delim         string // the server's hierarchy delimiter in Name, "" when flat
 	Unread        int
 	Total         int
+	ServerTotal   *int
 }
 
 // ServerSettings replaces an account's username and IMAP and SMTP servers. An

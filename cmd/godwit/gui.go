@@ -61,7 +61,11 @@ func uiLocale(preference, system string) string {
 // dataDir (ownerlock) before opening it; if another process does, it says so
 // in an error dialog and exits 2.
 func gui(ctx context.Context, dataDir string) int {
-	log.SetOutput(io.MultiWriter(os.Stderr, app.RecentLog)) // and slog, while its default is unset; an error report carries the recent lines
+	lw := newLogWriter(dataDir) // <dataDir>/logs/godwit.log, rotated; sync failures and parse-error traces land there
+	defer lw.Close()
+	log.SetOutput(io.MultiWriter(os.Stderr, app.RecentLog, lw)) // and slog, while its default is unset; an error report carries the recent lines
+	core.SetRawTraceWriter(lw) // protocol traces, redacted only of credentials, readable in the file
+	defer core.SetRawTraceWriter(nil)
 	mygo.App.SetName("Godwit")
 	if !packaged() { // the Microsoft Store updates the MSIX
 		mygo.Use(updater.Plugin) // checks GitHub releases daily; a no-op in dev builds

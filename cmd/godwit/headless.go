@@ -43,8 +43,12 @@ func headless(ctx context.Context, dataDir string, stderr io.Writer) int {
 		return 1
 	}
 	old := slog.Default() // the log package follows slog's default
-	slog.SetDefault(slog.New(newLogHandler(stderr, svc.Redact)))
+	lw := newLogWriter(dataDir)
+	defer lw.Close()
+	slog.SetDefault(slog.New(newLogHandler(io.MultiWriter(stderr, lw), svc.Redact)))
+	core.SetRawTraceWriter(lw) // protocol traces, redacted only of credentials, readable in the file
 	defer func() {
+		core.SetRawTraceWriter(nil)
 		svc.Close() // still logging through Redact
 		slog.SetDefault(old)
 	}()

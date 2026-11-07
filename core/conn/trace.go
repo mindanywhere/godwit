@@ -3,10 +3,12 @@ package conn
 import (
 	"errors"
 	"fmt"
+	"io"
 	"log"
 	"runtime"
 	"strings"
 	"sync"
+	"sync/atomic"
 	"weak"
 
 	"github.com/emersion/go-imap/v2"
@@ -66,9 +68,25 @@ func addTrace(c *imapclient.Client, t *trace) {
 	runtime.AddCleanup(c, func(k weak.Pointer[imapclient.Client]) { traces.Delete(k) }, k)
 }
 
-// LogTrace logs the end of c's traffic, masked, when err is a protocol error:
-// a server response go-imap could not parse. The log is what an error report
-// carries, so a report of such an error shows what the server sent.
+// rawTrace is where a trace is also written lightly redacted instead of
+// masked: the local log file, for reading on the machine. Unset: none.
+var rawTrace atomic.Pointer[io.Writer]
+
+// SetRawTraceWriter registers w as the sink for lightly redacted traces,
+// alongside the masked trace that reaches the log and so an error report.
+// The app points it at the local log file; a nil writer unsets.
+func SetRawTraceWriter(w io.Writer) {
+	if w == nil {
+		rawTrace.Store(nil)
+		return
+	}
+	rawTrace.Store(&w)
+}
+
+// LogTrace logs the end of c's traffic when err is a protocol error: a server
+// response go-imap could not parse. The masked trace goes to the log, which is
+// what an error report carries; the local log file, when one is registered,
+// also gets the trace redacted only of credentials, so it can be read there.
 func LogTrace(c *imapclient.Client, err error) {
 	if c == nil || !protocolErr(err) {
 		return
@@ -79,6 +97,10 @@ func LogTrace(c *imapclient.Client, err error) {
 	}
 	if b := v.(*trace).bytes(); len(b) > 0 {
 		log.Printf("imap: traffic before %q, masked:\n%s", firstLine(err.Error()), maskTrace(b))
+		if w := rawTrace.Load(); w != nil {
+			fmt.Fprintf(*w, "imap: traffic before %q, redacted only of credentials:\n%s\n",
+				firstLine(err.Error()), redactedTrace(b))
+		}
 	}
 }
 
@@ -230,4 +252,55 @@ func maskWord(w string) string {
 		}
 	}
 	return string(b)
+}
+
+// redactedLineMax caps one line of a redacted trace; a longer one is cut.
+const redactedLineMax = 1000
+
+// redactedTrace is maskTrace's counterpart for the local log file, which stays
+// on the machine and is read to understand a failure: it keeps protocol lines
+// as they are — quoted strings, mailbox names, UIDs — collapsing runs of
+// literal mail text to their size as maskTrace does, and removes credentials.
+func redactedTrace(b []byte) string {
+	var out strings.Builder
+	textBytes, textLines := 0, 0
+	flushText := func() {
+		if textLines > 0 {
+			fmt.Fprintf(&out, "… %d bytes in %d lines of text\n", textBytes, textLines)
+			textBytes, textLines = 0, 0
+		}
+	}
+	for line := range strings.Lines(string(b)) {
+		if !protocolLine(line) {
+			textBytes += len(line)
+			textLines++
+			continue
+		}
+		flushText()
+		m := redactedLine(strings.TrimRight(line, "\r\n"))
+		if len(m) > redactedLineMax {
+			m = fmt.Sprintf("%s… (+%d bytes)", m[:redactedLineMax], len(m)-redactedLineMax)
+		}
+		out.WriteString(m)
+		out.WriteString(eol(line))
+		out.WriteString("\n")
+	}
+	flushText()
+	return strings.TrimRight(out.String(), "\n")
+}
+
+// redactedLine returns an IMAP line with credentials removed: the arguments of
+// a LOGIN command or an AUTHENTICATE. Nothing else in an armed trace carries a
+// secret — arm runs after the login — so everything else is kept for reading.
+func redactedLine(s string) string {
+	tag, rest, ok := strings.Cut(s, " ")
+	if !ok || !isTag(tag) {
+		return s
+	}
+	cmd, _, _ := strings.Cut(rest, " ")
+	switch strings.ToUpper(cmd) {
+	case "LOGIN", "AUTHENTICATE":
+		return tag + " " + strings.ToUpper(cmd) + " [redacted]"
+	}
+	return s
 }

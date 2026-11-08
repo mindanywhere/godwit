@@ -108,6 +108,8 @@ type ReaderDeps struct {
 	// its remote images the proxy could not serve: native offers a retry
 	// (Allow). Under the lock too.
 	OnImagesFailed func(page any, message int64, n int)
+	// OnDiag is a page's measurement report (temporary diagnostics).
+	OnDiag func(s string)
 }
 
 // Reader keeps the reader pages (role "reader"), each bound to a message:
@@ -426,6 +428,14 @@ func (p *ReaderPage) Load(ctx context.Context) (ReaderBody, error) {
 		}
 	}
 	return p.r.build(ctx, svc, message, v, allowed)
+}
+
+// Diag is a page's measurement report (temporary diagnostics).
+func (p *ReaderPage) Diag(ctx context.Context, s string) error {
+	if p.r.d.OnDiag != nil {
+		p.r.d.OnDiag(s)
+	}
+	return nil
 }
 
 // Height is the body's height in CSS pixels, for the native layout.

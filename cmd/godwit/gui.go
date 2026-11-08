@@ -206,6 +206,7 @@ func gui(ctx context.Context, dataDir string) int {
 		OnImagesFailed: func(k any, m int64, n int) {
 			onBody(k, m, func(a *app.App, v ui.NativeWebView) { a.BodyImagesFailed(v, m, n) })
 		},
+		OnDiag: func(s string) { log.Printf("DIAG page: %s", s) }, // TODO drop
 	})
 	mygo.Bind(webui.NewReaderPage(reader))
 	// The image proxy: remote images of a body load from godwit-img: URLs.

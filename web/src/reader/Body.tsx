@@ -1,5 +1,5 @@
 import { RiRefreshLine } from "@remixicon/react";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type RefObject } from "react";
 import { Button } from "@/components/ui/button";
 import { ReaderPage as api, events, type ReaderBody, type ReaderGlass, type Theme } from "@/mygo";
 import { useT } from "@/shared/i18n";
@@ -170,7 +170,14 @@ export function Body({ body, theme }: { body: ReaderBody; theme: Theme }) {
     return () => removeEventListener("wheel", wheel);
   }, [wheel]);
 
-  const wire = useCallback((f: HTMLIFrameElement) => attach(f, wheel, theme), [wheel, theme]);
+  // What the bars cover, for the measured height to keep clear of them.
+  const glassRef = useRef<ReaderGlass>({ top: 0, bottom: 0 });
+  useEffect(() => events.readerGlass.on((g) => (glassRef.current = g)), []);
+
+  const wire = useCallback(
+    (f: HTMLIFrameElement) => attach(f, wheel, theme, glassRef),
+    [wheel, theme],
+  );
   useEffect(() => {
     const f = frame.current;
     if (!f) return;
@@ -227,6 +234,7 @@ function attach(
   frame: HTMLIFrameElement,
   wheel: (e: WheelEvent) => void,
   theme: Theme,
+  glass: RefObject<ReaderGlass>,
 ): () => void {
   const doc = frame.contentDocument;
   const win = frame.contentWindow;
@@ -264,7 +272,12 @@ function attach(
       ws.marginTop,
       ws.marginBottom,
     ].reduce((a, v) => a + (Number.parseFloat(v) || 0), 0);
-    const px = Math.min(MAX_HEIGHT, Math.ceil(wrap.getBoundingClientRect().height + extra));
+    // The bars may cover the page's bottom: that much again must be
+    // reachable, or the last line stays under a bar for good.
+    const px = Math.min(
+      MAX_HEIGHT,
+      Math.ceil(wrap.getBoundingClientRect().height + extra + glass.current.bottom),
+    );
     if (px === last) return;
     if (!changed && echo !== 0 && Math.abs(px - last - echo) <= 1) return;
     changed = false;
@@ -294,6 +307,32 @@ function attach(
     on(img, "error", contentChanged);
   }
   schedule();
+  // Temporary diagnostics: report the layout facts around the height.
+  let diags = 0;
+  const diagTimer = setInterval(() => {
+    if (++diags > 10) return clearInterval(diagTimer);
+    const r = wrap.getBoundingClientRect();
+    const lastEl = wrap.lastElementChild;
+    const lr = lastEl?.getBoundingClientRect();
+    const cs = win.getComputedStyle(doc.body);
+    const ws = win.getComputedStyle(wrap);
+    api.diag(
+      JSON.stringify({
+        px: last,
+        wrap: r.height,
+        de_scroll: doc.documentElement.scrollHeight,
+        body_scroll: doc.body.scrollHeight,
+        body_m: [cs.marginTop, cs.marginBottom],
+        wrap_m: [ws.marginTop, ws.marginBottom],
+        last: lastEl && lr ? `${lastEl.tagName}@${Math.round(lr.bottom)}h${Math.round(lr.height)}` : "none",
+        dpr: win.devicePixelRatio,
+        vv: win.visualViewport && `${win.visualViewport.height}`,
+        fonts: doc.fonts.status,
+        glass: glass.current.bottom,
+        zoom: win.outerWidth && win.innerWidth ? win.outerWidth / win.innerWidth : 0,
+      }),
+    );
+  }, 600);
 
   // Links: data-href only (Go's sanitizer); nothing else navigates.
   const linkOf = (t: EventTarget | null) =>

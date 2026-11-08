@@ -1,0 +1,19 @@
+<p>感谢回复，下面具体说明一下我的使用场景：</p>
+<p><strong>1. 目标位置</strong><br/>我是想把以前备份的邮件导入到本地 Godwit 里，只保存在本地离线查看和搜索，不需要上传同步到远端邮箱账户的文件夹。主要意图是把手头已有的本地备份利用起来，方便查找旧邮件、分析邮件内容。</p>
+<p><strong>2. 数量与来源</strong><br/>以前备份的邮件体量大概在 1000 到 5000 封之间，都是本地的 .eml 文件。</p>
+<p>再补充一个背景：因为服务器侧的邮箱空间有限，我通常把邮件下载下来之后就会删掉服务器端的邮件，所以这些旧邮件已经不在 IMAP 服务器上了。也就是说，想让它们重新出现在 Godwit 里，继续依赖 IMAP 同步这条路是走不通的，这也是我希望能直接从本地 .eml 文件导入的原因。</p>
+<p>不知道这样的场景在数据模型上是否可行，如果有需要我再补充细节，谢谢！</p><blockquote data-godwit="quote" style="margin: 0; padding: 0; border: 0"><p>于 2026/11/08 11:42，Baran &lt;notifications@github.com&gt; 写道：</p><blockquote><div style="display: flex; white-space: pre-wrap"><img height="20" width="20" style="border-radius: 50%; margin-right: 4px"/><strong>baranwang</strong> left a comment <a href="https://github.com/godwit-email/godwit/issues/509#issuecomment-6716836425">(godwit-email/godwit#509)</a></div>
+<p>感谢反馈！为了评估实现方案，想先确认一下你的具体使用场景：</p>
+<ol>
+<li><strong>目标位置</strong>：你是希望把本地 <code>.eml</code> <strong>导入并上传同步到某个邮箱账户的文件夹（IMAP）</strong>（例如把旧邮件迁移进现有邮箱），还是<strong>只保存在本地离线查看/搜索、不上传到邮箱服务器</strong>？</li>
+<li><strong>数量与来源</strong>：一般一次大概会导入多少封 <code>.eml</code>（几十封，还是成千上万封历史归档）？</li>
+</ol>
+<p>Godwit 目前的邮件列表和附件按需读取都围绕 IMAP 账户同步设计，这两种方式在数据模型上的路径差别很大，了解你的场景后我们再看怎么支持最合适。</p>
+
+<p style="font-size: small; color: #666">—<br/>Reply to this email directly, <a href="https://github.com/godwit-email/godwit/issues/509?email_source=notifications&amp;email_token=AITDOCNCOUDTSKWAAPL5NBL5X7TTDA5CNFSNUABFM5UWIORPF5TWS5BNNB2WEL2JONZXKZKDN5WW2ZLOOQXTMNZRGY4DGNRUGI22M4TFMFZW63VGMF2XI2DPOKSWK5TFNZ2KYZTPN52GK4S7MNWGSY3L#issuecomment-6716836425">view it on GitHub</a>, or <a href="https://github.com/notifications/unsubscribe-auth/AITDOCOIOZQW4FKYSKU7FMT5X7TTDAVCNFSNUABGKJSXA33TNF2G64TZHMYTIMJQG4ZDQOBTGM5US43TOVSTWNRSGM4DCNZVGQ2DPILWAI">unsubscribe</a>.<br/>Triage notifications, keep track of coding agent tasks and review pull requests on the go with GitHub Mobile for <a href="https://github.com/notifications/mobile/ios/AITDOCOI3JTI6GOBQM4ATDD5X7TTDA5CNFSNUABFM5UWIORPF5TWS5BNNB2WEL2JONZXKZKDN5WW2ZLOOQXTMNZRGY4DGNRUGI22M4TFMFZW63VGMF2XI2DPOKSWK5TFNZ2KUZTPN52GK4S7NFXXG">iOS</a> and <a href="https://github.com/notifications/mobile/android/AITDOCN5YS3L5PDWCGAYFJT5X7TTDA5CNFSNUABFM5UWIORPF5TWS5BNNB2WEL2JONZXKZKDN5WW2ZLOOQXTMNZRGY4DGNRUGI22M4TFMFZW63VGMF2XI2DPOKSWK5TFNZ2K4ZTPN52GK4S7MFXGI4TPNFSA">Android</a>. Download it today!
+<br/>You are receiving this because you authored the thread.<span style="color: transparent; font-size: 0; display: none; overflow: hidden; opacity: 0; width: 0; height: 0; max-width: 0; max-height: 0">Message ID: <span>&lt;godwit-email/godwit/issues/509/6716836425</span><span>@</span><span>github</span><span>.</span><span>com&gt;</span></span></p>
+
+
+
+</blockquote></blockquote>
+

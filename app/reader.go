@@ -1619,6 +1619,7 @@ func (r *reader) trustSender(from, addr string) {
 // page laid it out: its element takes it.
 func (a *App) BodyHeight(view ui.NativeWebView, message int64, px int) {
 	if b := a.mail.reader.shown(view, message); b != nil {
+		a.logf("DIAG body height: msg %d px %d (was %d)", message, px, b.height) // TODO drop
 		b.height = px
 		b.glass = [2]int{-1, -1} // the page listens now: what it was told before it loaded was dropped
 	}

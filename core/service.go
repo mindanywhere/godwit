@@ -775,7 +775,7 @@ func (s *Service) setStatus(ctx context.Context, accountID int64, status, detail
 func (s *Service) ListFolders(ctx context.Context, accountID int64) ([]Folder, error) {
 	rows, err := s.db.Query(ctx, `SELECT f.id, f.account_id, f.name, CASE WHEN f.role IN ('inbox', 'flagged') THEN f.role ELSE '' END,
 		(SELECT count(*) FROM messages m WHERE m.folder_id = f.id AND instr(m.flags, '\Seen') = 0 AND `+notPurgedCond+`), f.delim,
-		(SELECT count(*) FROM messages m WHERE m.folder_id = f.id AND `+notPurgedCond+`), f.server_total
+		(SELECT count(*) FROM messages m WHERE m.folder_id = f.id AND `+notPurgedCond+`), f.server_total, f.local
 		FROM folders f WHERE f.account_id = ? ORDER BY f.id`, accountID)
 	if err != nil {
 		return nil, err
@@ -794,7 +794,8 @@ func (s *Service) ListFolders(ctx context.Context, accountID int64) ([]Folder, e
 	for _, r := range rows.Values {
 		id := store.Int(r[0])
 		f := Folder{ID: id, AccountID: store.Int(r[1]), Name: store.Str(r[2]),
-			Role: cmp.Or(roles[id], store.Str(r[3])), Delim: store.Str(r[5]), Unread: int(store.Int(r[4])), Total: int(store.Int(r[6]))}
+			Role: cmp.Or(roles[id], store.Str(r[3])), Delim: store.Str(r[5]), Unread: int(store.Int(r[4])), Total: int(store.Int(r[6])),
+			Local: store.Int(r[8]) != 0}
 		if r[7] != nil {
 			v := int(store.Int(r[7]))
 			f.ServerTotal = &v

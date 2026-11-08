@@ -75,6 +75,7 @@ type Folder struct {
 	Unread        int
 	Total         int
 	ServerTotal   *int
+	Local         bool // only this app holds it: it accepts imported .eml, never syncs
 }
 
 // ServerSettings replaces an account's username and IMAP and SMTP servers. An

@@ -304,6 +304,14 @@ func (p *mailPage) folderRow(c *ui.Context, f sideFolder, open *bool) {
 			}
 			m.Separator()
 		}
+		if real { // a path-only parent is no folder to export or fill
+			if m.Item(i18n.T("mail_folder_export")).Disabled(f.Total == 0).Chosen() {
+				p.exportFolder(f.Folder)
+			}
+			if f.Local && m.Item(i18n.T("mail_folder_import")).Chosen() {
+				p.importFolder(f.Folder)
+			}
+		}
 		if acc, ok := p.a.accountByID(f.AccountID); ok {
 			p.accountItems(m, acc)
 		}

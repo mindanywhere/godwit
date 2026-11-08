@@ -864,6 +864,9 @@ func (p *mailPage) listView(c *ui.Context) {
 					p.applySecurity(on, "")
 				}
 			}).Icon(menuIcon("shield"))
+			if m.Item(i18n.T("mail_export_one")).Icon(menuIcon("save")).Chosen() {
+				p.exportMail(on)
+			}
 			if len(on) == 1 { // for mail like this one: a rule, or blocking its sender
 				m.Separator()
 				if m.Item(i18n.T("mail.menu.rule")).Icon(menuIcon("filter")).Chosen() {

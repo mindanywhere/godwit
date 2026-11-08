@@ -208,12 +208,13 @@ func TestSidebarContextMenuDisabledStates(t *testing.T) {
 	require.Error(t, err)
 	assert.Contains(t, err.Error(), "disabled")
 
-	// Right click on Sent: only the account's own entries
+	// Right click on Sent: its export entry and the account's own entries
 	h.tt.CloseMenu()
 	sentName := i18n.T("mail.folder.sent")
 	require.NoError(t, h.tt.RightClick(sentName))
 	name := accountName(accs[0])
-	assert.Equal(t, []string{i18n.Tf("mail.account_sync", name), i18n.Tf("mail.account_edit", name)}, h.tt.Menu())
+	assert.Equal(t, []string{i18n.T("mail_folder_export"),
+		i18n.Tf("mail.account_sync", name), i18n.Tf("mail.account_edit", name)}, h.tt.Menu())
 }
 
 func TestPaletteCommandsFolderActions(t *testing.T) {

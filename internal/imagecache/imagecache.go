@@ -448,6 +448,32 @@ func (c *Cache) Get(ctx context.Context, src string) (Image, error) {
 	return c.get(ctx, Key(src), src, "", 0)
 }
 
+// Read is what Get is for what the cache holds: the image from disk when it
+// is cached, false otherwise, never the network. It touches the entry's
+// last-used time as Get does.
+func (c *Cache) Read(src string) (Image, bool) {
+	key := Key(src)
+	c.mu.Lock()
+	e := c.files[key]
+	if e == nil || e.format == "miss" {
+		c.mu.Unlock()
+		return Image{}, false
+	}
+	e.used = time.Now()
+	name := e.name
+	c.wg.Add(1)
+	c.mu.Unlock()
+	data, err := os.ReadFile(filepath.Join(c.dir, name))
+	if err != nil {
+		c.wg.Done()
+		return Image{}, false
+	}
+	now := time.Now()
+	_ = os.Chtimes(filepath.Join(c.dir, name), now, now)
+	c.wg.Done()
+	return Image{Data: data, Format: e.format, Width: e.width, Height: e.height}, true
+}
+
 func (c *Cache) get(ctx context.Context, key, src, source string, gen int) (Image, error) {
 	c.mu.Lock()
 	if c.ctx.Err() != nil {

@@ -180,7 +180,7 @@ func dataPNG(b []byte) string { return "data:image/png;base64," + base64.StdEnco
 // image is the proxy's answer for src, an image of message.
 func (f *readerFixture) image(t *testing.T, message int64, src string) *httptest.ResponseRecorder {
 	t.Helper()
-	return f.imageAt(t, fmt.Sprintf("godwit-img://m%d/%s", message, imagecache.Key(src)))
+	return f.imageAt(t, proxied(message, src))
 }
 
 func (f *readerFixture) imageAt(t *testing.T, u string) *httptest.ResponseRecorder {
@@ -193,8 +193,9 @@ func (f *readerFixture) imageAt(t *testing.T, u string) *httptest.ResponseRecord
 }
 
 // proxied is src as the body holds it.
+// proxied is the page's form of the proxy URL of src, as proxyPrefix makes it.
 func proxied(message int64, src string) string {
-	return fmt.Sprintf("godwit-img://m%d/%s", message, imagecache.Key(src))
+	return proxyPrefix(message) + imagecache.Key(src)
 }
 
 // remoteMail is a message with text and one remote image at src.
@@ -250,13 +251,13 @@ func TestReaderTranslationKeepsBodyAndImagePolicy(t *testing.T) {
 	require.NoError(t, err)
 	assert.True(t, withImages.Remote)
 	assert.Contains(t, withImages.HTML, `你好 &lt;img`)
-	assert.Contains(t, withImages.HTML, `godwit-img:`)
+	assert.Contains(t, withImages.HTML, `src="`+proxied(m.ID, "https://tracker.example/pixel.png")+`"`)
 	f.r.Translate(m.ID, nil)
 	restored, err := f.p.Load(pageCtx(k))
 	require.NoError(t, err)
 	assert.Contains(t, restored.HTML, "Hello reader")
 	assert.NotContains(t, restored.HTML, "你好")
-	assert.Contains(t, restored.HTML, `godwit-img:`)
+	assert.Contains(t, restored.HTML, `src="`+proxied(m.ID, "https://tracker.example/pixel.png")+`"`)
 	assert.True(t, restored.Remote, "switching back keeps image consent")
 }
 
@@ -641,7 +642,7 @@ func TestReaderPolicyLoadsImagesAtOnce(t *testing.T) {
 	src := srv.URL + "/a.png"
 	b := load("auto", src)
 	assert.True(t, b.Remote, "automatic: no asking")
-	assert.Contains(t, b.HTML, "godwit-img://")
+	assert.Contains(t, b.HTML, `src="`+proxied(b.Message, src)+`"`)
 	assert.Equal(t, http.StatusOK, f.image(t, b.Message, src).Code)
 
 	setMode("trusted")
@@ -748,7 +749,7 @@ func attr(n *html.Node, key string) string {
 // (web/src/reader/frame.ts): else it inverts a mail that styles its own dark.
 func TestReaderBodyKeepsDarkMark(t *testing.T) {
 	safe, _, _ := mail.Sanitize(`<style>@media (prefers-color-scheme: dark) { .a { color: #eee } }</style><p class="a">x</p><img src="https://img.example/a.png">`, nil, true)
-	out, tokens := prepareBody(safe, imagefetch.NewBudget(), 1, noDims)
+	out, tokens := prepareBody(safe, imagefetch.NewBudget(), 1, noDims, noData)
 	require.Len(t, tokens, 1, "the image went through the proxy: the body was written again")
 	assert.True(t, strings.HasPrefix(out, `<style data-dark="">`), out)
 }
@@ -757,17 +758,17 @@ func TestReaderBodyKeepsDarkMark(t *testing.T) {
 func TestReaderBodyWhole(t *testing.T) {
 	t.Run("paragraphs", func(t *testing.T) {
 		in := strings.Repeat("<p>x</p>", 6000) + "<p>tail</p>"
-		out, _ := prepareBody(in, imagefetch.NewBudget(), 1, noDims)
+		out, _ := prepareBody(in, imagefetch.NewBudget(), 1, noDims, noData)
 		assert.Equal(t, in, out)
 	})
 	t.Run("cells", func(t *testing.T) {
 		in := "<table><tbody><tr>" + strings.Repeat("<td>c</td>", 3000) + "</tr></tbody></table><p>after</p>"
-		out, _ := prepareBody(in, imagefetch.NewBudget(), 1, noDims)
+		out, _ := prepareBody(in, imagefetch.NewBudget(), 1, noDims, noData)
 		assert.Equal(t, in, out)
 	})
 	t.Run("depth and inlines", func(t *testing.T) {
 		in := strings.Repeat("<div>", 30) + strings.Repeat("<b>x</b>", 25000) + strings.Repeat("</div>", 30) + "<p>after</p>"
-		out, _ := prepareBody(in, imagefetch.NewBudget(), 1, noDims)
+		out, _ := prepareBody(in, imagefetch.NewBudget(), 1, noDims, noData)
 		assert.Equal(t, in, out)
 	})
 	t.Run("reported", func(t *testing.T) {
@@ -854,12 +855,14 @@ func TestReaderEmitFollowsBinding(t *testing.T) {
 
 func noDims(string) (int, int, bool) { return 0, 0, false }
 
+func noData(string) (string, int64, int64, bool) { return "", 0, 0, false }
+
 func TestPrepareBodyProxiesRemoteImages(t *testing.T) {
 	dims := func(src string) (int, int, bool) { return 40, 30, src == "https://cdn.example/known.png" }
 	in := `<img src="https://cdn.example/known.png" alt="a"><img src="https://cdn.example/sized.png" width="9">` +
 		`<img src="https://cdn.example/new.png" alt="n"><img src="https://cdn.example/styled.png" style="width:50%">` +
 		`<table data-bg="https://cdn.example/bg.jpg" style="color: red"><tbody><tr><td data-bg="javascript:1">x</td></tr></tbody></table>`
-	out, tokens := prepareBody(in, imagefetch.NewBudget(), 12, dims)
+	out, tokens := prepareBody(in, imagefetch.NewBudget(), 12, dims, noData)
 	assert.NotContains(t, out, "cdn.example")
 	assert.NotContains(t, out, "data-bg")
 	assert.Len(t, tokens, 5)
@@ -877,14 +880,14 @@ func TestPrepareBodyCapsRemoteImages(t *testing.T) {
 	for i := range imagefetch.MaxImages + 5 {
 		fmt.Fprintf(&in, `<img src="https://cdn.example/%d.png" alt="i%d"><img src="https://cdn.example/0.png">`, i, i)
 	}
-	out, tokens := prepareBody(in.String(), imagefetch.NewBudget(), 3, noDims)
+	out, tokens := prepareBody(in.String(), imagefetch.NewBudget(), 3, noDims, noData)
 	assert.Len(t, tokens, imagefetch.MaxImages, "the same URL again costs nothing; the ones past the count lose their src")
 	assert.Equal(t, 5, strings.Count(out, "<img alt="), "five images lost their src")
 }
 
 func TestPrepareBodyKeepsCSSSizedImages(t *testing.T) {
 	dims := func(string) (int, int, bool) { return 40, 30, true }
-	out, _ := prepareBody(`<img src="https://a.example/h.png" style="height:50px"><img src="https://a.example/w.png" style="width:50%">`, imagefetch.NewBudget(), 1, dims)
+	out, _ := prepareBody(`<img src="https://a.example/h.png" style="height:50px"><img src="https://a.example/w.png" style="width:50%">`, imagefetch.NewBudget(), 1, dims, noData)
 	assert.NotContains(t, out, `width="40"`)
 	assert.NotContains(t, out, `height="30"`)
 }

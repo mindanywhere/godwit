@@ -6,7 +6,11 @@ import frameCSS from "./frame.css?inline";
  * data: images and the godwit-img: images Go's image proxy serves (a remote image never reaches
  * the network from the page), on top of the page's CSP (ADR 0013).
  */
-export const FRAME_CSP = "default-src 'none'; style-src 'unsafe-inline'; img-src data: godwit-img:";
+// The image hosts: godwit-img: everywhere, and on Windows its mygo
+// schemehost mapping, which the app answers itself (never the network;
+// *.localhost is loopback-reserved).
+export const FRAME_CSP =
+  "default-src 'none'; style-src 'unsafe-inline'; img-src data: godwit-img: http://*.godwit-img.localhost";
 
 const escapeText = (s: string) => s.replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`);
 

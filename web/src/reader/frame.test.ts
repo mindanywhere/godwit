@@ -67,7 +67,9 @@ test("iframe csp first: the head's first element is the CSP meta, img-src data: 
   expect(first?.getAttribute("http-equiv")).toBe("Content-Security-Policy");
   expect(first?.getAttribute("content")).toBe(FRAME_CSP);
   expect(FRAME_CSP).toContain("img-src data: godwit-img:");
-  expect(FRAME_CSP).not.toMatch(/https?:|\*/); // nothing reaches the network
+  // Nothing reaches the network: the only http origin is the app-answered
+  // schemehost mapping of godwit-img (Windows), a loopback-reserved name.
+  expect(FRAME_CSP).not.toMatch(/https:|\*(?!\.godwit-img\.localhost)/);
   expect(FRAME_CSP).toContain("default-src 'none'");
   // The CSP precedes every byte of the mail.
   expect(s.indexOf(FRAME_CSP)).toBeLessThan(s.indexOf("Hello"));

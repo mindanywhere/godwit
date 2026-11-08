@@ -2,6 +2,7 @@ package webui
 
 import (
 	"context"
+	"encoding/base64"
 	"errors"
 	"log"
 	"maps"
@@ -328,7 +329,7 @@ func (r *Reader) build(ctx context.Context, svc *core.Service, message, v int64,
 	var tokens map[string]string
 	budget := imagefetch.NewBudget() // the message's images, inline and remote
 	if m.HTML != "" {
-		b.HTML, tokens = prepareBody(m.HTML, budget, message, svc.ImageCache().Dims)
+		b.HTML, tokens = prepareBody(m.HTML, budget, message, svc.ImageCache().Dims, embedCached(svc.ImageCache()))
 	} else {
 		b.Plain = m.Text
 	}
@@ -542,6 +543,7 @@ func (r *Reader) ImageHandler() http.Handler {
 		}
 		message, token, ok := parseImageURL(req.URL)
 		if !ok {
+			log.Printf("image proxy: bad url %q", req.URL)
 			http.NotFound(w, req)
 			return
 		}
@@ -553,6 +555,11 @@ func (r *Reader) ImageHandler() http.Handler {
 		svc := r.svc
 		r.mu.Unlock()
 		if src == "" || svc == nil {
+			allowed := false
+			if st := r.msgs[message]; st != nil {
+				allowed = st.allowed
+			}
+			log.Printf("image proxy: miss: message %d token %q allowed=%v", message, token, allowed)
 			http.NotFound(w, req)
 			return
 		}
@@ -647,6 +654,24 @@ func (r *Reader) chargePixels(message int64, token string, img imagecache.Image)
 	return true
 }
 
+// embedCached turns a cached remote image into a data: URL: the body shows
+// it without the image proxy (a mail body's images are usually cached at
+// arrival). Uncached ones keep the proxy, which fetches them at page load.
+func embedCached(c *imagecache.Cache) func(src string) (url string, size, px int64, ok bool) {
+	return func(src string) (url string, size, px int64, ok bool) {
+		img, ok := c.Read(src)
+		if !ok {
+			return "", 0, 0, false
+		}
+		mime := "image/" + img.Format
+		if img.Format == "svg" {
+			mime = "image/svg+xml"
+		}
+		u := "data:" + mime + ";base64," + base64.StdEncoding.EncodeToString(img.Data)
+		return u, int64(len(img.Data)), int64(img.Width) * int64(img.Height), true
+	}
+}
+
 // parseAvatarURL is the message of a godwit-img: avatar URL.
 func parseAvatarURL(u *url.URL) (message int64, ok bool) {
 	h, found := strings.CutPrefix(u.Host, "a")
@@ -654,9 +679,11 @@ func parseAvatarURL(u *url.URL) (message int64, ok bool) {
 	return message, found && err == nil && (u.Path == "" || u.Path == "/")
 }
 
-// parseImageURL is the message and token of a godwit-img: URL.
+// parseImageURL is the message and token of a godwit-img: URL, in the
+// scheme's own form or, from a Windows page, its schemehost mapping.
 func parseImageURL(u *url.URL) (message int64, token string, ok bool) {
-	h, found := strings.CutPrefix(u.Host, "m")
+	h := strings.TrimSuffix(u.Host, ".godwit-img.localhost")
+	h, found := strings.CutPrefix(h, "m")
 	message, err := strconv.ParseInt(h, 10, 64)
 	token = strings.TrimPrefix(u.Path, "/")
 	return message, token, found && err == nil && token != "" && !strings.Contains(token, "/")

@@ -1,6 +1,7 @@
 package webui
 
 import (
+	"runtime"
 	"net/url"
 	"strconv"
 	"strings"
@@ -23,11 +24,14 @@ const bgAttr = "data-bg"
 //
 // Each remote image (an http(s) src, a data-bg) is pointed at the image
 // proxy, godwit-img://m<message>/<token>; tokens maps each token to its
-// URL. An <img> with no size gets the one dims knows (the image is cached),
+// URL. An image the cache holds goes instead as a data: URL (dataURL): on
+// Windows' WebView2 a custom-scheme subresource never reaches the proxy.
+// An <img> with no size gets the one dims knows (the image is cached),
 // so its space is kept before it loads. A body needing no change comes back
 // as it was.
 func prepareBody(safe string, budget *imagefetch.Budget, message int64,
-	dims func(src string) (w, h int, ok bool)) (out string, tokens map[string]string) {
+	dims func(src string) (w, h int, ok bool),
+	dataURL func(src string) (url string, size, px int64, ok bool)) (out string, tokens map[string]string) {
 	root := &html.Node{Type: html.ElementNode, Data: "body", DataAtom: atom.Body}
 	nodes, err := html.ParseFragment(strings.NewReader(safe), root)
 	if err != nil {
@@ -36,7 +40,7 @@ func prepareBody(safe string, budget *imagefetch.Budget, message int64,
 	for _, n := range nodes {
 		root.AppendChild(n)
 	}
-	p := &preparer{budget: budget, message: message, dims: dims, tokens: map[string]string{}}
+	p := &preparer{budget: budget, message: message, dims: dims, dataURL: dataURL, tokens: map[string]string{}}
 	for n := range root.Descendants() {
 		if n.Type != html.ElementNode {
 			continue
@@ -62,6 +66,7 @@ type preparer struct {
 	budget  *imagefetch.Budget
 	message int64
 	dims    func(src string) (w, h int, ok bool)
+	dataURL func(src string) (url string, size, px int64, ok bool)
 	tokens  map[string]string
 	changed bool
 }
@@ -79,7 +84,19 @@ func (p *preparer) proxy(src string) string {
 	}
 	p.tokens[token] = src
 	p.changed = true
-	return (&url.URL{Scheme: ImageScheme, Host: "m" + strconv.FormatInt(p.message, 10), Path: "/" + token}).String()
+	return proxyPrefix(p.message) + token
+}
+
+// proxyPrefix is the page's form of the image proxy's URLs for a message:
+// the scheme itself, except on Windows, whose WebView2 never asks a custom
+// scheme; there mygo's schemehost maps godwit-img to
+// http://<host>.godwit-img.localhost, which its request filter answers
+// without a network round trip (the name is loopback-reserved).
+func proxyPrefix(message int64) string {
+	if runtime.GOOS == "windows" {
+		return "http://m" + strconv.FormatInt(message, 10) + ".godwit-img.localhost/"
+	}
+	return (&url.URL{Scheme: ImageScheme, Host: "m" + strconv.FormatInt(message, 10)}).String() + "/"
 }
 
 // image checks img's src: a data: image against the budget (its src goes
@@ -92,6 +109,12 @@ func (p *preparer) image(img *html.Node) {
 	src := img.Attr[i].Val
 	switch lower := strings.ToLower(src); {
 	case strings.HasPrefix(lower, "http://"), strings.HasPrefix(lower, "https://"):
+		if u, size, px, ok := p.dataURL(src); ok && p.budget.TakeInline(size, px) == nil {
+			img.Attr[i].Val = u
+			p.changed = true
+			p.reserve(img, src)
+			return
+		}
 		if u := p.proxy(src); u != "" {
 			img.Attr[i].Val = u
 			p.reserve(img, src)

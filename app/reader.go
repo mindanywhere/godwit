@@ -834,7 +834,11 @@ func (r *reader) view(c *ui.Context) {
 // see a web view.
 func (r *reader) glass(b *msgBody, box ui.Rect) {
 	cover := func(px float32) int { return int(math.Ceil(float64(max(0, min(px, box.H))))) }
-	g := [2]int{cover(r.pane.Y + r.barTop - box.Y), cover(box.Y + box.H - (r.pane.Y + r.pane.H - r.barBottom))}
+	// The bars cover the pane's top and bottom edges; the body's own edges,
+	// when they run past the pane, are not covered: clamp them to the pane,
+	// or the blur would grow with how far the message is scrolled.
+	g := [2]int{cover(min(r.pane.Y+r.barTop, box.Y+box.H) - max(r.pane.Y, box.Y)),
+		cover(min(box.Y+box.H, r.pane.Y+r.pane.H) - (r.pane.Y + r.pane.H - r.barBottom))}
 	if g != b.glass && b.view != nil {
 		b.glass = g
 		r.p.a.plat.BodyGlass(b.view, g[0], g[1])

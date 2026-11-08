@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.29.0](https://github.com/godwit-email/godwit/compare/v1.28.0...v1.29.0) (2026-11-08)
+
+### Features
+
+* **mail:** export a message or a whole folder as `.eml` files (message list and folder menus); a local folder also imports `.eml` from a chosen directory (047073d, 8aee2bd)
+* **app:** a finished export or import also raises a system notification, so a long run is reported while the window is in the background (8aee2bd)
+* **app:** each folder shows its local and server message counts — sync at a glance (04bf537)
+
+### Bug Fixes
+
+* **app:** body images visible on Windows and the reader's glass band no longer grows as you scroll (6b95f4a)
+* **app:** the file log is lightly redacted; reports stay strongly redacted (8b67c69)
+
+### Internal
+
+* go-imap fork pinned at v2.0.0-beta.8.godwit.7 (6f9164c)
+* `scripts/imgproto-win`: a throwaway probe for the WebView2 image-proxy path (8aee2bd)
+* ADRs on smart mailboxes: condition groups, reply counting (13b5525, 1955348)
+
 ## [1.28.0](https://github.com/godwit-email/godwit/compare/v1.27.0...v1.28.0) (2026-11-05)
 
 

@@ -8,7 +8,7 @@ Godwit is a desktop email client for macOS, Windows and Linux. It works with any
 
 The name comes from the bar-tailed godwit, which holds the record for the longest non-stop bird flight.
 
-> **Status: 0.0.x, early preview.** Expect rough edges, and keep a copy of anything important on your mail server.
+> **Status: 1.29.0, early preview.** Expect rough edges, and keep a copy of anything important on your mail server.
 
 ## Features
 
@@ -22,6 +22,7 @@ The name comes from the bar-tailed godwit, which holds the record for the longes
   - **Native plugins**: a shared library behind a small C ABI ([`sdk/native/godwit_plugin.h`](sdk/native/godwit_plugin.h)), for what a sandbox cannot do. It runs with all of Godwit's rights, so Godwit shows the risk and asks you to allow that exact file; a changed file needs your permission again.
   - **MCP servers**: give Wit external tools. Each server is approved once, and each write call every time.
 - **Import**: bring `.eml` backups into a local folder (**Settings › Import**, or `godwit import-eml`). It goes a batch at a time and a stopped run resumes where it ended; the mail stays on this computer, never synced and never sent.
+- **Export**: save a message, or a whole folder, as `.eml` files (message list and folder menus). A finished run tells you in the app and with a system notification.
 - **For other agents**: `godwit mcp` is an MCP server that lets Claude, Cursor and other agents read your mail and create drafts, but never send. Turn on the Local API under **Settings › Intelligence › AI apps** and copy the client configuration from there.
 - **Updates itself** from dl.godwit.email (the Microsoft Store version is updated by the Store).
 
